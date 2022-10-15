@@ -4,15 +4,68 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Fruits")]
+    public GameObject[] fruitPrefabs = null;
+    public float maxLifeTime = 5f;
+
+    [Header("Spawner data")]
+    public float startSpawnDelay = 2f;
+    public float maxSpawnDelay = 1f;
+    public float minSpawnDelay = 0.25f;
+    public float maxAngle = 15f;
+    public float minAngle = -15f;
+    public float maxForce = 22f;
+    public float minForce = 18f;
+
+    private Collider spawnArea = null;
+
+    private void Awake()
     {
-        
+        spawnArea = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        StartCoroutine(Spawn());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();    
+    }
+
+    private IEnumerator Spawn()
+    {
+        yield return new WaitForSeconds(startSpawnDelay);
+
+        while (enabled)
+        {
+            GameObject fruit = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+            GameObject fruitIntantiate = Instantiate(fruit, CalculatePosition(), CalculateRotation());
+            CalculateSpawnForce(fruitIntantiate);
+            Destroy(fruitIntantiate, maxLifeTime);
+
+            yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
+        }
+    }
+
+    private Vector3 CalculatePosition()
+    {
+        Vector3 position = new Vector3();
+        position.x = Random.Range(spawnArea.bounds.min.x, spawnArea.bounds.max.x);
+        position.y = Random.Range(spawnArea.bounds.min.y, spawnArea.bounds.max.y);
+        position.z = Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z);
+        return position;
+    }
+
+    private Quaternion CalculateRotation()
+    {
+        return Quaternion.Euler(0f, 0f, Random.Range(minAngle, maxAngle));
+    }
+
+    private void CalculateSpawnForce(GameObject fruitIntantiate)
+    {
+        float force = Random.Range(minForce, maxForce);
+        fruitIntantiate.GetComponent<Rigidbody>().AddForce(fruitIntantiate.transform.up * force, ForceMode.Impulse);
     }
 }
