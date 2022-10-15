@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 public class Fruit : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Fruit : MonoBehaviour
     public GameObject whole = null;
     public GameObject sliced = null;
     public ParticleSystem juice = null;
+
+    [Header("Fruit data")]
+    public int points = 1;
 
     private Rigidbody fruitRigidbody = null;
     private Collider fruitCollider = null;
@@ -29,6 +33,8 @@ public class Fruit : MonoBehaviour
 
     private void Slice(Vector3 direction, Vector3 position, float force)
     {
+        GameManager.Instance.UpdateScore(points);
+
         whole.SetActive(false);
         sliced.SetActive(true);
 

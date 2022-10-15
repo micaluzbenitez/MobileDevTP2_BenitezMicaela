@@ -80,6 +80,7 @@ MonoBehaviour:
   whole: {fileID: 7170476383190940188}
   sliced: {fileID: 7170476384658424062}
   juice: {fileID: 3361946461075661068}
+  points: 1
 --- !u!1 &9152402720924424176
 GameObject:
   m_ObjectHideFlags: 0
