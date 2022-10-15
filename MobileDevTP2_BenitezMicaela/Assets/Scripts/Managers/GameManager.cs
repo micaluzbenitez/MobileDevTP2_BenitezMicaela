@@ -8,6 +8,9 @@ namespace Managers
 {
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
+        public Spawner spawner = null;
+        public Blade blade = null;
+
         [Header("UI")]
         public TMP_Text scoreText = null;
 
@@ -28,6 +31,12 @@ namespace Managers
         {
             score += points;
             scoreText.text = "Score: " + score;
+        }
+
+        public void Explode()
+        {
+            spawner.enabled = false;
+            blade.enabled = false;
         }
     }
 }

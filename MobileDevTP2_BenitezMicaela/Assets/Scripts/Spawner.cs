@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [Header("Fruits")]
+    [Header("Fruits and bomb")]
     public GameObject[] fruitPrefabs = null;
+    public GameObject bomb = null;
     public float maxLifeTime = 5f;
+    [Range(0f, 1f)] public float bombChance = 0.05f;
 
     [Header("Spawner data")]
     public float startSpawnDelay = 2f;
@@ -40,10 +42,13 @@ public class Spawner : MonoBehaviour
 
         while (enabled)
         {
-            GameObject fruit = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
-            GameObject fruitIntantiate = Instantiate(fruit, CalculatePosition(), CalculateRotation());
-            CalculateSpawnForce(fruitIntantiate);
-            Destroy(fruitIntantiate, maxLifeTime);
+            GameObject prefab = null;            
+            if (Random.value < bombChance) prefab = bomb;
+            else prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+
+            GameObject instantiate = Instantiate(prefab, CalculatePosition(), CalculateRotation());
+            CalculateSpawnForce(instantiate);
+            Destroy(instantiate, maxLifeTime);
 
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
         }
