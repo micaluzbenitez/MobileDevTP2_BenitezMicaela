@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Blade : MonoBehaviour
 {
-    public Vector3 direction { get; private set; }
+
+    [Header("Blade data")]
     public float minSliceVelocity = 0.01f;
+
+    [Header("Blade trail")]
+    public TrailRenderer bladeTrail = null;
+
+    public Vector3 direction { get; private set; }
 
     private Camera mainCamera = null;
     private Collider bladeCollider = null;
@@ -42,12 +48,15 @@ public class Blade : MonoBehaviour
 
         slicing = true;
         bladeCollider.enabled = true;
+        bladeTrail.enabled = true;
+        bladeTrail.Clear();
     }
 
     private void StopSlicing()
     {
         slicing = false;
         bladeCollider.enabled = false;
+        bladeTrail.enabled = false;
     }
 
     private void ContinueSlicing()
