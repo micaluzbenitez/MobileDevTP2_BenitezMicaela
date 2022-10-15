@@ -7,6 +7,7 @@ public class Blade : MonoBehaviour
 
     [Header("Blade data")]
     public float minSliceVelocity = 0.01f;
+    public float sliceForce = 5f;
 
     [Header("Blade trail")]
     public TrailRenderer bladeTrail = null;
