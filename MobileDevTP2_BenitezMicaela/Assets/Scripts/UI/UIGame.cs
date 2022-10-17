@@ -15,7 +15,7 @@ namespace UI
         public float fadeSpeed = 0f;
 
         [Header("Game over")]
-        public GameObject gameOver = null;
+        public Animator gameOverAnimator = null;
 
         [Header("Scenes")]
         public string shopSceneName = "";
@@ -29,7 +29,7 @@ namespace UI
 
         private void Awake()
         {
-            gameOver.SetActive(false);
+            gameOverAnimator.SetBool("Idle", true);
         }
 
         private void Update()
@@ -49,7 +49,8 @@ namespace UI
             {
                 if (loser)
                 {
-                    gameOver.SetActive(true);
+                    gameOverAnimator.SetBool("Idle", false);
+                    gameOverAnimator.SetBool("Open", true);
                     Time.timeScale = 0;
                 }
             }
@@ -85,21 +86,21 @@ namespace UI
         public void Replay()
         {
             OnRestartGame?.Invoke();
-            gameOver.SetActive(false);
+            gameOverAnimator.SetBool("Open", false);
             Time.timeScale = 1;
         }
 
         public void Shop()
         {
             LoaderManager.Instance.LoadScene(shopSceneName);
-            gameOver.SetActive(false);
+            gameOverAnimator.SetBool("Open", false);
             Time.timeScale = 1;
         }
 
         public void MainMenu()
         {
             LoaderManager.Instance.LoadScene(mainMenuSceneName);
-            gameOver.SetActive(false);
+            gameOverAnimator.SetBool("Open", false);
             Time.timeScale = 1;
         }
     }
