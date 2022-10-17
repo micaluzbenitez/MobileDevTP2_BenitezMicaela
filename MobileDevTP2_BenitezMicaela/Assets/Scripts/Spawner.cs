@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Toolbox.Pool;
 
 public class Spawner : MonoBehaviour
 {
     [Header("Fruits and bomb")]
-    public GameObject[] fruitPrefabs = null;
-    public GameObject bomb = null;
+    public string[] fruitNames = null;
+    public string bombName = null;
     public float maxLifeTime = 5f;
     [Range(0f, 1f)] public float bombChance = 0.05f;
 
@@ -20,10 +21,12 @@ public class Spawner : MonoBehaviour
     public float minForce = 18f;
 
     private Collider spawnArea = null;
+    private ObjectPooler pooler = null;
 
     private void Awake()
     {
         spawnArea = GetComponent<Collider>();
+        pooler = ObjectPooler.Instance;
     }
 
     private void OnEnable()
@@ -42,13 +45,13 @@ public class Spawner : MonoBehaviour
 
         while (enabled)
         {
-            GameObject prefab = null;            
-            if (Random.value < bombChance) prefab = bomb;
-            else prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+            string objectToSpawn = null;            
+            if (Random.value < bombChance) objectToSpawn = bombName;
+            else objectToSpawn = fruitNames[Random.Range(0, fruitNames.Length)];            
 
-            GameObject instantiate = Instantiate(prefab, CalculatePosition(), CalculateRotation());
-            CalculateSpawnForce(instantiate);
-            Destroy(instantiate, maxLifeTime);
+            GameObject objectSpawned = pooler.SpawnFromPool(objectToSpawn, CalculatePosition(), CalculateRotation());
+            CalculateSpawnForce(objectSpawned);
+            // Destroy(objectSpawned, maxLifeTime);
 
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
         }
