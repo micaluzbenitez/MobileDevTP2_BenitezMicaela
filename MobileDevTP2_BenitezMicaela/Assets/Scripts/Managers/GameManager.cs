@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using Toolbox;
-using Toolbox.Lerpers;
-using Entities;
+using UI;
 
 namespace Managers
 {
@@ -18,65 +15,44 @@ namespace Managers
         public Blade blade = null;
 
         [Header("UI")]
-        public TMP_Text scoreText = null;
-        public Image fadeImage = null;
-        public float fadeSpeed = 0f;
-
-        private int score = 0;
-        private bool loser = false;
-        private ColorLerper fadeLerper = new ColorLerper();
+        public UIGame uiGame = null;
 
         private void Start()
         {
             NewGame();
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            UpdateFade();
+            uiGame.OnRestartGame += NewGame;
+        }
+
+        private void OnDisable()
+        {
+            uiGame.OnRestartGame -= NewGame;
         }
 
         private void NewGame()
         {
-            FadeToClear();
+            uiGame.FadeToClear();
             spawner.enabled = true;
             blade.enabled = true;
-            loser = false;
-
-            score = 0;
-            scoreText.text = "Score: " + score;
+            uiGame.LoserState(false);
+            uiGame.RestartScore();
+            ClearScene();
         }
 
         public void UpdateScore(int points)
         {
-            score += points;
-            scoreText.text = "Score: " + score;
-        }
-
-        private void UpdateFade()
-        {
-            if (fadeLerper.Active)
-            {
-                fadeLerper.UpdateLerper();
-                fadeImage.color = fadeLerper.GetValue();
-            }
-
-            if (fadeLerper.Reached)
-            {
-                if (loser)
-                {
-                    NewGame();
-                    ClearScene();
-                }
-            }
+            uiGame.UpdateScore(points);
         }
 
         public void Explode()
         {
             spawner.enabled = false;
             blade.enabled = false;
-            loser = true;
-            FadeToBlack();
+            uiGame.LoserState(true);
+            uiGame.FadeToBlack();
         }
 
         private void ClearScene()
@@ -92,16 +68,6 @@ namespace Managers
             {
                 Destroy(bomb.gameObject);
             }
-        }
-
-        private void FadeToBlack()
-        {
-            fadeLerper.SetLerperValues(Color.clear, Color.black, fadeSpeed, Lerper<Color>.LERPER_TYPE.STEP_SMOOTH, true);
-        }
-
-        private void FadeToClear()
-        {
-            fadeLerper.SetLerperValues(Color.black, Color.clear, fadeSpeed, Lerper<Color>.LERPER_TYPE.STEP_SMOOTH, true);
         }
     }
 }
