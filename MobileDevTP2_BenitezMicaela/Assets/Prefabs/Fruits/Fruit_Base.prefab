@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad28062e84192a4b94b4fdcc445eabb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToTurnOff: 5
   whole: {fileID: 7170476383190940188}
   sliced: {fileID: 7170476384658424062}
   juice: {fileID: 3361946461075661068}

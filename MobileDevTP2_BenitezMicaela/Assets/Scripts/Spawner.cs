@@ -51,7 +51,6 @@ public class Spawner : MonoBehaviour
 
             GameObject objectSpawned = pooler.SpawnFromPool(objectToSpawn, CalculatePosition(), CalculateRotation());
             CalculateSpawnForce(objectSpawned);
-            // Destroy(objectSpawned, maxLifeTime);
 
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
         }
@@ -73,7 +72,10 @@ public class Spawner : MonoBehaviour
 
     private void CalculateSpawnForce(GameObject fruitIntantiate)
     {
+        Rigidbody fruitRigidbody = fruitIntantiate.GetComponent<Rigidbody>();
+        fruitRigidbody.Sleep();
+
         float force = Random.Range(minForce, maxForce);
-        fruitIntantiate.GetComponent<Rigidbody>().AddForce(fruitIntantiate.transform.up * force, ForceMode.Impulse);
+        fruitRigidbody.AddForce(fruitIntantiate.transform.up * force, ForceMode.Impulse);
     }
 }
