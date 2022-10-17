@@ -5,7 +5,7 @@ using Managers;
 
 namespace Entities
 {
-    public class Bomb : Entity
+    public class Bomb : MonoBehaviour
     {
         private void OnTriggerEnter(Collider other)
         {

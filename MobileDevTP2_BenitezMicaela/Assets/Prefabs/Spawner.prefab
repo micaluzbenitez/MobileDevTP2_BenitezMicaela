@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5787213231717440447}
   - component: {fileID: 5787213231717440444}
-  - component: {fileID: 2912274120466768275}
   - component: {fileID: 5787213231717440446}
   m_Layer: 0
   m_Name: Spawner
@@ -46,38 +45,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 1, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2912274120466768275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5787213231717440433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 687c1fdb124b7bf40a884229213c3264, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pools:
-  - tag: Apple
-    prefab: {fileID: 4783801147462397055, guid: 2058101c3ddd1d34d954acbb3f665504, type: 3}
-    size: 10
-  - tag: Kiwi
-    prefab: {fileID: 4783801147462397055, guid: 13bd6b908e8ce5b409a1f57637bb68e7, type: 3}
-    size: 10
-  - tag: Lemon
-    prefab: {fileID: 4783801147462397055, guid: 6b209c809b44fd04ab52db07195f6e0a, type: 3}
-    size: 10
-  - tag: Orange
-    prefab: {fileID: 4783801147462397055, guid: 84a375f9dac1e5148ae874f28ab7afff, type: 3}
-    size: 10
-  - tag: Watermelon
-    prefab: {fileID: 4783801147462397055, guid: f2f67f88cdadfd24a96e8608dc3a5878, type: 3}
-    size: 10
-  - tag: Bomb
-    prefab: {fileID: 657495101913612749, guid: c6c15eb8ff493b945aa5b764e0fba60f, type: 3}
-    size: 10
-  parent: {fileID: 5787213231717440447}
 --- !u!114 &5787213231717440446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,13 +57,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118d21e4793d9124aa1ed2d4e6ca6fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitNames:
-  - Apple
-  - Kiwi
-  - Lemon
-  - Orange
-  - Watermelon
-  bombName: Bomb
+  fruitPrefabs:
+  - {fileID: 4783801147462397055, guid: 2058101c3ddd1d34d954acbb3f665504, type: 3}
+  - {fileID: 4783801147462397055, guid: 13bd6b908e8ce5b409a1f57637bb68e7, type: 3}
+  - {fileID: 4783801147462397055, guid: 6b209c809b44fd04ab52db07195f6e0a, type: 3}
+  - {fileID: 4783801147462397055, guid: 84a375f9dac1e5148ae874f28ab7afff, type: 3}
+  - {fileID: 4783801147462397055, guid: f2f67f88cdadfd24a96e8608dc3a5878, type: 3}
+  bomb: {fileID: 657495101913612749, guid: c6c15eb8ff493b945aa5b764e0fba60f, type: 3}
   maxLifeTime: 5
   bombChance: 0.05
   startSpawnDelay: 2

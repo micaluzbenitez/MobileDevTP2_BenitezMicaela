@@ -5,7 +5,7 @@ using Managers;
 
 namespace Entities
 {
-    public class Fruit : Entity
+    public class Fruit : MonoBehaviour
     {
         [Header("Fruit components")]
         public GameObject whole = null;
@@ -18,7 +18,7 @@ namespace Entities
         private Rigidbody fruitRigidbody = null;
         private Collider fruitCollider = null;
 
-        protected override void Awake()
+        private void Awake()
         {
             fruitRigidbody = GetComponent<Rigidbody>();
             fruitCollider = GetComponent<Collider>();
@@ -31,14 +31,6 @@ namespace Entities
                 Blade blade = other.GetComponent<Blade>();
                 if (blade) Slice(blade.direction, blade.transform.position, blade.sliceForce);
             }
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            whole.SetActive(true);
-            sliced.SetActive(false);
-            fruitCollider.enabled = true;
         }
 
         private void Slice(Vector3 direction, Vector3 position, float force)

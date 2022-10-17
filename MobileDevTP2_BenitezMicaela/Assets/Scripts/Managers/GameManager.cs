@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Toolbox;
-using Toolbox.Pool;
 using Toolbox.Lerpers;
+using Entities;
 
 namespace Managers
 {
@@ -81,8 +81,17 @@ namespace Managers
 
         private void ClearScene()
         {
-            ObjectPooler pooler = ObjectPooler.Instance;
-            pooler.TurnOffAllPoolObjects();
+            Fruit[] fruits = FindObjectsOfType<Fruit>();
+            foreach (Fruit fruit in fruits)
+            {
+                Destroy(fruit.gameObject);
+            }
+
+            Bomb[] bombs = FindObjectsOfType<Bomb>();
+            foreach (Bomb bomb in bombs)
+            {
+                Destroy(bomb.gameObject);
+            }
         }
 
         private void FadeToBlack()
