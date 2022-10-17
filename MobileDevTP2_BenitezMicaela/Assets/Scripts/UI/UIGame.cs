@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Toolbox.Lerpers;
+using Managers;
 
 namespace UI
 {

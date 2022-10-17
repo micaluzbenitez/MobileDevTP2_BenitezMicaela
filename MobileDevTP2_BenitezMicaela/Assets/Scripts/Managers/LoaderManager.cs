@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using Toolbox;
 
-public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
+namespace Managers
 {
-    public void LoadScene(string sceneName)
+    public class LoaderManager : MonoBehaviourSingleton<LoaderManager>
     {
-        SceneManager.LoadScene(sceneName);
+        public void LoadScene(string sceneName)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 }
