@@ -638,6 +638,7 @@ MonoBehaviour:
   blade: {fileID: 2057879867}
   scoreText: {fileID: 1481062037}
   fadeImage: {fileID: 1766346267}
+  fadeSpeed: 1
 --- !u!4 &1316190697
 Transform:
   m_ObjectHideFlags: 0

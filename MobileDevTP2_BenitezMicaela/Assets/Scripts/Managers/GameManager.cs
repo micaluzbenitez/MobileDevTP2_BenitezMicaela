@@ -5,31 +5,43 @@ using UnityEngine.UI;
 using TMPro;
 using Toolbox;
 using Toolbox.Pool;
-using Entities;
+using Toolbox.Lerpers;
 
 namespace Managers
 {
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
+        [Header("Spawner")]
         public Spawner spawner = null;
+
+        [Header("Blade")]
         public Blade blade = null;
 
         [Header("UI")]
         public TMP_Text scoreText = null;
         public Image fadeImage = null;
+        public float fadeSpeed = 0f;
 
         private int score = 0;
+        private bool loser = false;
+        private ColorLerper fadeLerper = new ColorLerper();
 
         private void Start()
         {
             NewGame();
         }
 
+        private void Update()
+        {
+            UpdateFade();
+        }
+
         private void NewGame()
         {
-            Time.timeScale = 1f;
+            FadeToClear();
             spawner.enabled = true;
             blade.enabled = true;
+            loser = false;
 
             score = 0;
             scoreText.text = "Score: " + score;
@@ -48,44 +60,36 @@ namespace Managers
             scoreText.text = "Score: " + score;
         }
 
+        private void UpdateFade()
+        {
+            if (fadeLerper.Active)
+            {
+                fadeLerper.UpdateLerper();
+                fadeImage.color = fadeLerper.GetValue();
+            }
+
+            if (fadeLerper.Reached)
+            {
+                if (loser) NewGame();
+            }
+        }
+
         public void Explode()
         {
             spawner.enabled = false;
             blade.enabled = false;
-            StartCoroutine(ExplodeSequence());
+            loser = true;
+            FadeToBlack();
         }
 
-        private IEnumerator ExplodeSequence()
+        private void FadeToBlack()
         {
-            float elapsed = 0f;
-            float duration = 0.5f;
+            fadeLerper.SetLerperValues(Color.clear, Color.black, fadeSpeed, Lerper<Color>.LERPER_TYPE.STEP_SMOOTH, true);
+        }
 
-            while (elapsed < duration)
-            {
-                float lerperTime = Mathf.Clamp01(elapsed / duration);
-                fadeImage.color = Color.Lerp(Color.clear, Color.black, lerperTime);
-
-                Time.timeScale = 1f - lerperTime;
-                elapsed += Time.unscaledDeltaTime;
-
-                yield return null;
-            }
-
-            yield return new WaitForSecondsRealtime(1f);
-
-            NewGame();
-
-            elapsed = 0;
-
-            while (elapsed < duration)
-            {
-                float lerperTime = Mathf.Clamp01(elapsed / duration);
-                fadeImage.color = Color.Lerp(Color.black, Color.clear, lerperTime);
-
-                elapsed += Time.unscaledDeltaTime;
-
-                yield return null;
-            }
+        private void FadeToClear()
+        {
+            fadeLerper.SetLerperValues(Color.black, Color.clear, fadeSpeed, Lerper<Color>.LERPER_TYPE.STEP_SMOOTH, true);
         }
     }
 }
