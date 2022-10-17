@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Toolbox;
+using Toolbox.Pool;
 using Entities;
 
 namespace Managers
@@ -37,19 +38,8 @@ namespace Managers
 
         private void ClearScene()
         {
-            Fruit[] fruits = FindObjectsOfType<Fruit>();
-
-            foreach (Fruit fruit in fruits)
-            {
-                Destroy(fruit.gameObject);
-            }
-
-            Bomb[] bombs = FindObjectsOfType<Bomb>();
-
-            foreach (Bomb bomb in bombs)
-            {
-                Destroy(bomb.gameObject);
-            }
+            ObjectPooler pooler = ObjectPooler.Instance;
+            pooler.TurnOffAllPoolObjects();
         }
 
         public void UpdateScore(int points)

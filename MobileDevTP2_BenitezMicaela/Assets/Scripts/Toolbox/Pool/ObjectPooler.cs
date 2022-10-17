@@ -34,6 +34,9 @@ namespace Toolbox.Pool
 		[Header("Parent"), Tooltip("Pool game objects parent")]
         public Transform parent = null;
 
+        /// Pool objects
+        private List<GameObject> objects = new List<GameObject>();
+
         /// <summary>
         /// Initialize the pool lists and instantiate its objects
         /// </summary>
@@ -49,6 +52,7 @@ namespace Toolbox.Pool
                     if (parent) obj.transform.SetParent(parent);
                     obj.name = pool.tag;
                     obj.SetActive(false);
+                    objects.Add(obj);
                     objectPool.Enqueue(obj);
                 }
 
@@ -80,6 +84,17 @@ namespace Toolbox.Pool
             poolDictionary[tag].Enqueue(objectToSpawn);
 
             return objectToSpawn;
+        }
+
+        /// <summary>
+        /// Call this to turn off al pool objects
+        /// </summary>
+        public void TurnOffAllPoolObjects()
+        {
+            for (int i = 0; i < objects.Count; i++)
+            {
+                objects[i].SetActive(false);
+            }
         }
     }
 }
