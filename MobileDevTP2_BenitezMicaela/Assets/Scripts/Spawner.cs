@@ -70,12 +70,9 @@ public class Spawner : MonoBehaviour
         return Quaternion.Euler(0f, 0f, Random.Range(minAngle, maxAngle));
     }
 
-    private void CalculateSpawnForce(GameObject fruitIntantiate)
+    private void CalculateSpawnForce(GameObject objectSpawned)
     {
-        Rigidbody fruitRigidbody = fruitIntantiate.GetComponent<Rigidbody>();
-        fruitRigidbody.Sleep();
-
         float force = Random.Range(minForce, maxForce);
-        fruitRigidbody.AddForce(fruitIntantiate.transform.up * force, ForceMode.Impulse);
+        objectSpawned.GetComponent<Rigidbody>().AddForce(objectSpawned.transform.up * force, ForceMode.Impulse);
     }
 }

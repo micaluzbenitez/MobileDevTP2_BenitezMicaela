@@ -45,13 +45,6 @@ namespace Managers
 
             score = 0;
             scoreText.text = "Score: " + score;
-            ClearScene();
-        }
-
-        private void ClearScene()
-        {
-            ObjectPooler pooler = ObjectPooler.Instance;
-            pooler.TurnOffAllPoolObjects();
         }
 
         public void UpdateScore(int points)
@@ -70,7 +63,11 @@ namespace Managers
 
             if (fadeLerper.Reached)
             {
-                if (loser) NewGame();
+                if (loser)
+                {
+                    NewGame();
+                    ClearScene();
+                }
             }
         }
 
@@ -80,6 +77,12 @@ namespace Managers
             blade.enabled = false;
             loser = true;
             FadeToBlack();
+        }
+
+        private void ClearScene()
+        {
+            ObjectPooler pooler = ObjectPooler.Instance;
+            pooler.TurnOffAllPoolObjects();
         }
 
         private void FadeToBlack()

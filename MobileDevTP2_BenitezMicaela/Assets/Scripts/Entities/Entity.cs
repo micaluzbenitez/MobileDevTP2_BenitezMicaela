@@ -10,6 +10,12 @@ namespace Entities
         public float timeToTurnOff = 0;
 
         protected Timer timer = new Timer();
+        protected Rigidbody rb = null;
+
+        protected virtual void Awake()
+        {
+            rb = GetComponent<Rigidbody>();
+        }
 
         protected virtual void OnEnable()
         {
@@ -20,6 +26,11 @@ namespace Entities
         {
             if (timer.Active) timer.UpdateTimer();
             if (timer.ReachedTimer()) gameObject.SetActive(false);
+        }
+
+        protected virtual void OnDisable()
+        {
+            if (rb) rb.Sleep();
         }
     }
 }
