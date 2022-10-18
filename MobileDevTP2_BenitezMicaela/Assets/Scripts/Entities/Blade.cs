@@ -6,7 +6,6 @@ namespace Entities
 {
     public class Blade : MonoBehaviour
     {
-
         [Header("Blade data")]
         public float minSliceVelocity = 0.01f;
         public float sliceForce = 5f;

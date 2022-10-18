@@ -9,6 +9,9 @@ namespace Managers
 {
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
+        [Header("Game data")]
+        public GameData gameData = null;
+
         [Header("Spawner")]
         public Spawner spawner = null;
 
@@ -20,6 +23,7 @@ namespace Managers
 
         private void Start()
         {
+            blade.bladeTrail.colorGradient = gameData.bladeColor;
             NewGame();
         }
 
