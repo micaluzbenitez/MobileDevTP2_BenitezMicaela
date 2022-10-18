@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8441eceab12041c45ae5bc344dad5750, type: 3}
-  m_Name: Game Data
+  m_Script: {fileID: 11500000, guid: d7ef10d95b2922940b5046a9f2c9aa08, type: 3}
+  m_Name: OrangeBlueBlade
   m_EditorClassIdentifier: 
-  totalCoins: 700
-  bladeColor:
+  color:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
+    key0: {r: 0.1137255, g: 0.09411766, b: 0.89019614, a: 1}
+    key1: {r: 0.9333334, g: 0.4156863, b: 0.06666667, a: 1}
+    key2: {r: 0.9333334, g: 0.4156863, b: 0.06666666, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
@@ -25,7 +24,7 @@ MonoBehaviour:
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
     ctime1: 65535
-    ctime2: 0
+    ctime2: 60716
     ctime3: 0
     ctime4: 0
     ctime5: 0
@@ -42,3 +41,5 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  cost: 100
+  unlock: 0
