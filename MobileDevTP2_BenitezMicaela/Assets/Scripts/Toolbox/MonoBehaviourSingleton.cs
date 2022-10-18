@@ -20,7 +20,6 @@ namespace Toolbox
                 return;
             }
             Instance = this as T;
-            DontDestroyOnLoad(this);
         }
     }
 }

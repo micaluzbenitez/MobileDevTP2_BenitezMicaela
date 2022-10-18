@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8441eceab12041c45ae5bc344dad5750, type: 3}
   m_Name: Game Data
   m_EditorClassIdentifier: 
-  totalCoins: 71
+  totalCoins: 0
   bladeColor:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
