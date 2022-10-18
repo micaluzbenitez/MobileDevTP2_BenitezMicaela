@@ -1673,7 +1673,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1355394655}
         m_TargetAssemblyTypeName: UI.UIGame, Assembly-CSharp
-        m_MethodName: Replay
+        m_MethodName: Shop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2122,7 +2122,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1355394655}
         m_TargetAssemblyTypeName: UI.UIGame, Assembly-CSharp
-        m_MethodName: Replay
+        m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
