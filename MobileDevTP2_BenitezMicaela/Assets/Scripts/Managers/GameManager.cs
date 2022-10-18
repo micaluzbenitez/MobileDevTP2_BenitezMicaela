@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Entities;
-using Toolbox;
 using UI;
 
 namespace Managers
 {
-    public class GameManager : MonoBehaviourSingleton<GameManager>
+    public class GameManager : MonoBehaviour
     {
         [Header("Game data")]
         public GameData gameData = null;
@@ -20,6 +19,9 @@ namespace Managers
 
         [Header("UI")]
         public UIGame uiGame = null;
+
+        public static GameManager Instance;
+        public static GameManager Get() { return Instance; }
 
         private void Start()
         {
