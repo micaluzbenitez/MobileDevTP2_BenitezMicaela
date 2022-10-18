@@ -10,6 +10,9 @@ namespace UI
 {
     public class UIGame : MonoBehaviour
     {
+        [Header("Game data")]
+        public GameData gameData = null;
+
         [Header("UI")]
         public TMP_Text scoreText = null;
         public Image fadeImage = null;
@@ -17,25 +20,30 @@ namespace UI
 
         [Header("Game over")]
         public Animator gameOverAnimator = null;
+        public TMP_Text coinsText = null;
+        public float coinsTextSpeed = 0f;
 
         [Header("Scenes")]
         public string shopSceneName = "";
         public string mainMenuSceneName = "";
 
         private int score = 0;
-        private bool loser = false;
+        private bool gameOver = false;
         private ColorLerper fadeLerper = new ColorLerper();
+        private FloatLerper coinsLerper = new FloatLerper();
 
         public Action OnRestartGame = null;
 
         private void Awake()
         {
             gameOverAnimator.SetBool("Idle", true);
+            coinsLerper.unscaleTimer = true;
         }
 
         private void Update()
         {
             UpdateFade();
+            CalculateTotalCoins();
         }
 
         private void UpdateFade()
@@ -48,12 +56,26 @@ namespace UI
 
             if (fadeLerper.Reached)
             {
-                if (loser)
+                if (gameOver)
                 {
+                    coinsLerper.SetLerperValues(gameData.totalCoins, gameData.totalCoins + score, coinsTextSpeed, Lerper<float>.LERPER_TYPE.STEP_SMOOTH, true);
+                    coinsText.text = "$" + gameData.totalCoins;
+                    gameData.totalCoins += score;
+
                     gameOverAnimator.SetBool("Idle", false);
                     gameOverAnimator.SetBool("Open", true);
                     Time.timeScale = 0;
+                    gameOver = false;
                 }
+            }
+        }
+
+        private void CalculateTotalCoins()
+        {
+            if (coinsLerper.Active)
+            {
+                coinsLerper.UpdateLerper();
+                coinsText.text = "$" + (int)coinsLerper.GetValue();
             }
         }
 
@@ -69,9 +91,9 @@ namespace UI
             scoreText.text = "Score: " + score;
         }
 
-        public void LoserState(bool state)
+        public void GameOver()
         {
-            loser = state;
+            gameOver = true;
         }
 
         public void FadeToBlack()

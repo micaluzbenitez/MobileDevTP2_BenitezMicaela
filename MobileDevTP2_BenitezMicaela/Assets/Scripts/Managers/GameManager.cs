@@ -42,7 +42,6 @@ namespace Managers
             uiGame.FadeToClear();
             spawner.enabled = true;
             blade.enabled = true;
-            uiGame.LoserState(false);
             uiGame.RestartScore();
             ClearScene();
         }
@@ -56,7 +55,7 @@ namespace Managers
         {
             spawner.enabled = false;
             blade.enabled = false;
-            uiGame.LoserState(true);
+            uiGame.GameOver();
             uiGame.FadeToBlack();
         }
 

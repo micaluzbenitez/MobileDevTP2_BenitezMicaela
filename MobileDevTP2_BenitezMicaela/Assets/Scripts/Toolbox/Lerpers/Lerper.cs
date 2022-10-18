@@ -40,6 +40,8 @@ namespace Toolbox.Lerpers
         // Properties
         public bool Active { get => active; }
         public bool Reached { get => reached; }
+
+        public bool unscaleTimer = false;
         #endregion
 
         #region METHODS
@@ -75,7 +77,8 @@ namespace Toolbox.Lerpers
                 return;
             }
 
-            currentTime += Time.deltaTime;
+            if (unscaleTimer) currentTime += Time.unscaledDeltaTime;
+            else currentTime += Time.deltaTime;
             if (currentTime > time) currentTime = time;
 
             percentage = currentTime / time;
