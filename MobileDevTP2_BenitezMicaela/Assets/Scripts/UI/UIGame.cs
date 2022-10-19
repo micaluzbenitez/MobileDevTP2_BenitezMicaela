@@ -18,6 +18,9 @@ namespace UI
         public Image fadeImage = null;
         public float fadeSpeed = 0f;
 
+        [Header("Options")]
+        public Animator optionsAnimator = null;
+
         [Header("Game over")]
         public Animator gameOverAnimator = null;
         public TMP_Text coinsText = null;
@@ -104,6 +107,19 @@ namespace UI
         public void FadeToClear()
         {
             fadeLerper.SetLerperValues(Color.black, Color.clear, fadeSpeed, Lerper<Color>.LERPER_TYPE.STEP_SMOOTH, true);
+        }
+
+        public void Options()
+        {
+            optionsAnimator.SetBool("Idle", false);
+            optionsAnimator.SetBool("Open", true);
+            Time.timeScale = 0;
+        }
+
+        public void CloseOptions()
+        {
+            optionsAnimator.SetBool("Open", false);
+            Time.timeScale = 1;
         }
 
         public void Replay()
