@@ -21,11 +21,23 @@ namespace Entities
         public float maxForce = 22f;
         public float minForce = 18f;
 
+        [Header("Difficult")]
+        public bool increaseDifficult = false;
+        public float timePerChange = 0f;
+        [Range(0f, 1f)] public float maxBombChance = 0f;
+        public float increaseBombChanceValue = 0f;
+
         private Collider spawnArea = null;
+        private float difficultTimer = 0f;
 
         private void Awake()
         {
             spawnArea = GetComponent<Collider>();
+        }
+
+        private void Update()
+        {
+            IncreaseGameDifficult();
         }
 
         private void OnEnable()
@@ -36,6 +48,21 @@ namespace Entities
         private void OnDisable()
         {
             StopAllCoroutines();
+        }
+
+        private void IncreaseGameDifficult()
+        {
+            if (increaseDifficult && (bombChance < maxBombChance))
+            {
+                difficultTimer += Time.deltaTime;
+
+                if (difficultTimer > timePerChange)
+                {
+                    bombChance += increaseBombChanceValue;
+                    if (bombChance > maxBombChance) bombChance = maxBombChance;
+                    difficultTimer = 0f;
+                }
+            }
         }
 
         private IEnumerator Spawn()

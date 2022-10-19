@@ -73,3 +73,7 @@ MonoBehaviour:
   minAngle: -15
   maxForce: 22
   minForce: 18
+  increaseDifficult: 1
+  timePerChange: 20
+  maxBombChance: 0.5
+  increaseBombChanceValue: 0.05
