@@ -54,14 +54,15 @@ public abstract class LoggerBase
 #if UNITY_ANDROID
         return new AndroidLogger();
 #else
-        return new defaultLogger();
+        return new DefaultLogger();
 #endif
     }
 }
 
 public class AndroidLogger : LoggerBase
 {
-    const string LOGGER_CLASS_NAME = "com.example.logger2022.GameLogger";
+    const string LOGGER_PLUGIN = "com.example.logger2022";
+    static string LOGGER_CLASS_NAME = LOGGER_PLUGIN + ".GameLogger";
     const char SEP = ';';
     AndroidJavaClass loggerClass;
     AndroidJavaObject loggerObject;
