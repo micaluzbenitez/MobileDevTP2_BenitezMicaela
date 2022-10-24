@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AndroidPlugin : MonoBehaviour
 {
-    LoggerBase logger;
+    [SerializeField] private TMP_Text text = null;
+
+    private LoggerBase logger;
 
     private void Start()
     {
@@ -37,8 +40,14 @@ public class AndroidPlugin : MonoBehaviour
     
     private void UpdateLogs()
     {
-        var logs = logger.GetAllLogs();
         // Updatear logs en la pantalla
+        List<string> logs = logger.GetAllLogs();
+        text.text = "";
+
+        foreach (string log in logs)
+        {
+            text.text += log + " ";
+        }
     }
 }
 
@@ -63,9 +72,19 @@ public class AndroidLogger : LoggerBase
 {
     const string LOGGER_PLUGIN = "com.example.logger2022";
     static string LOGGER_CLASS_NAME = LOGGER_PLUGIN + ".GameLogger";
+    static string ALERT_INTERFACE_NAME = LOGGER_PLUGIN + ".AlertWindow";
     const char SEP = ';';
     AndroidJavaClass loggerClass;
     AndroidJavaObject loggerObject;
+
+    public class AlertWindow : AndroidJavaProxy
+    {
+        public Action acceptAction;
+        public Action declineAction;
+
+        public AlertWindow() : base(ALERT_INTERFACE_NAME) { }
+        public void OnAccept() => acceptAction?.Invoke();
+        public void OnDecline() => declineAction?.Invoke();    }
 
     public AndroidLogger()
     {
@@ -95,8 +114,17 @@ public class AndroidLogger : LoggerBase
     public override void ShowAlert(Action<bool> callback)
     {
         // Llama al plugn para mostrar la alerta
+        CreateAlert("Clear Logs and delete Logs.txt", "Are you sure?", () => { callback.Invoke(true); });
         loggerObject.Call("ShowAlert");
-        callback.Invoke(true);
+    }
+
+    private void CreateAlert(string title, string message, Action accept = null, Action decline = null)
+    {
+        AlertWindow alertWindow = new AlertWindow();
+        alertWindow.acceptAction = accept;
+        alertWindow.declineAction = decline;
+
+        loggerObject.Call("CreateAlert", new object[] { title, message, alertWindow });
     }
 }
 
@@ -120,6 +148,6 @@ public class DefaultLogger : LoggerBase
 
     public override void ShowAlert(Action<bool> callback)
     {
-        throw new NotImplementedException();
+        Debug.Log("ShowAlert");
     }
 }
