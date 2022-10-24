@@ -1,128 +1,105 @@
 package com.example.logger2022;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import android.util.Log;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 public class GameLogger {
     private static final GameLogger instance = new GameLogger();
-
     private static final String TAG = "Log22 => ";
 
-    private static Activity unityActivity;
+    public static Activity activity;
     AlertDialog.Builder builder;
-
-    static String filepath;
-    static String logs = "";
-    static File file;
 
     public static GameLogger GetInstance(String path) {
         Log.d("", "GetInstance()");
-        filepath = path;
-        LoadLog();
         return instance;
     }
 
     private GameLogger() { MyLog("Logger created"); }
     public void MyLog(String str) { Log.d(TAG, str); }
 
-    public static void ReceiveUnityActivity(Activity activity)
-    {
-        unityActivity = activity;
-    }
-
     // ---------------------------------------- LOGS ----------------------------------------
 
-    public void SendLog(String message)
+    public void SendLog(String str)
     {
-        Log.d(TAG, message);
-        logs += message;
+        Log.d(TAG, "SendLog");
+        Log.d(TAG, str);
     }
 
-    private static void LoadLog()
+    public void SaveLog(String str)
     {
-        File file = new File(filepath);
-
-        if(file.exists())
+        Log.d(TAG, "SaveLog");
+        File path = activity.getFilesDir();
+        File file = new File(path, "savedLogs.text");
+        try
         {
-            try {
-                FileInputStream stream = new FileInputStream(file);
-                byte[] bytes = new byte[(int) file.length()];
-                try {
-                    stream.read(bytes);
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-                finally
-                {
-                    try
-                    {
-                        stream.close();
-                        logs = new String(bytes);
-                        Log.d(TAG, "File loaded!");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            FileOutputStream stream = new FileOutputStream(file);
+            try
+            {
+                stream.write(str.getBytes());
+            }
+            finally
+            {
+                stream.close();
             }
         }
-    }
-
-    public void SaveLog()
-    {
-        if(file == null)
-            file = new File(filepath);
-        else
-            file.delete();
-
-        try {
-            if(file.createNewFile()) {
-                FileOutputStream stream = new FileOutputStream(file);
-                Log.d(TAG, "File created!");
-                try {
-                    stream.write(logs.getBytes());
-                    Log.d(TAG, "File saved!");
-                } finally {
-                    stream.close();
-                    Log.d(TAG, "File closed!");
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        catch (IOException exp)
+        {
+            Log.e("Exception","Failed to save log line, File couldnt be saved" + exp.toString());
         }
     }
 
     public String GetAllLogs()
     {
         Log.d(TAG, "GetAllLogs");
-        return logs;
+        File path = activity.getFilesDir();
+        File file = new File(path, "savedLogs.text");
+        if(!file.exists())
+            return  null;
+
+        int length = (int)file.length();
+        byte[] bytes = new byte[length];
+
+        try
+        {
+            FileInputStream stream = new FileInputStream(file);
+            try
+            {
+                stream.read(bytes);
+            }
+            finally
+            {
+                stream.close();
+            }
+        }
+        catch(IOException exp)
+        {
+            Log.e("Exception","Error getting logs from file savedLogs.text" + exp.toString());
+        }
+        String logsGetFromFile = new String(bytes);
+        return  logsGetFromFile;
     }
 
     public void DeleteAll()
     {
-        logs = "";
-        file.delete();
         Log.d(TAG, "DeleteAll");
+        File path = activity.getFilesDir();
+        File file = new File(path, "savedLogs.text");
+        file.delete();
     }
 
-    // ------------------------------------ ALERT WINDOW ------------------------------------
+    // ---------------------------------------- ALERT ---------------------------------------
 
     public void CreateAlert(String title, String message, AlertWindow alertWindow)
     {
-        builder = new AlertDialog.Builder(unityActivity);
+        builder = new AlertDialog.Builder(activity);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setCancelable(false);
@@ -131,7 +108,7 @@ public class GameLogger {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "Clicked from plugin - YES");
+                        Log.i(TAG, "Clicked from plugin - YES");
                         alertWindow.OnAccept();
                         dialog.cancel();
                     }
@@ -143,7 +120,7 @@ public class GameLogger {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "Clicked from plugin - NO");
+                        Log.i(TAG, "Clicked from plugin - NO");
                         alertWindow.OnDecline();
                         dialog.cancel();
                     }
