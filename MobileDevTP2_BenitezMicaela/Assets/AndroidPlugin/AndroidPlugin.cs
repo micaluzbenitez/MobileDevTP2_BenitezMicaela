@@ -16,6 +16,16 @@ public class AndroidPlugin : MonoBehaviour
         UpdateLogs();
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            logger.ShowAlertView(new string[] { "Alert Title", "Alert Message", "Button 1", "Button 2" }, (int obj) => {
+                Debug.Log("Local Handler called: " + obj);
+            });
+        }
+    }
+
     #region UI_Events
     public void SendLog()
     {
@@ -26,7 +36,7 @@ public class AndroidPlugin : MonoBehaviour
     public void ClearLog()
     {
         // Llamar a la alerta con el callback de ConfirmDeleteAll()
-        logger.ShowAlert(ConfirmDeleteAll);
+        //logger.ShowAlertView(ConfirmDeleteAll);
     }
     #endregion
 
@@ -56,7 +66,7 @@ public abstract class LoggerBase
     public abstract void Log(string str);
     public abstract void DeleteAll();
     public abstract List<string> GetAllLogs();
-    public abstract void ShowAlert(System.Action<bool> callback);
+    public abstract void ShowAlertView(string[] strings, System.Action<int>handler = null);
 
     public static LoggerBase CreateLogger()
     {
@@ -72,59 +82,84 @@ public class AndroidLogger : LoggerBase
 {
     const string LOGGER_PLUGIN = "com.example.logger2022";
     static string LOGGER_CLASS_NAME = LOGGER_PLUGIN + ".GameLogger";
-    static string ALERT_INTERFACE_NAME = LOGGER_PLUGIN + ".AlertWindow";
     const char SEP = ';';
-    AndroidJavaClass loggerClass;
-    AndroidJavaObject loggerObject;
 
-    public class AlertWindow : AndroidJavaProxy
+    public class AlertViewCallback : AndroidJavaProxy
     {
-        public Action acceptAction;
-        public Action declineAction;
+        private Action<int> alertHandler;
+        
+        public AlertViewCallback(Action<int>alertHandlerIn) : base (LOGGER_CLASS_NAME + "$AlertViewCallback")
+        {
+            alertHandler = alertHandlerIn;
+        }
 
-        public AlertWindow() : base(ALERT_INTERFACE_NAME) { }
-        public void OnAccept() => acceptAction?.Invoke();
-        public void OnDecline() => declineAction?.Invoke();    }
+        public void OnButtonTapped(int index)
+        {
+            Debug.Log("Button tapped: " + index);
+            if (alertHandler != null)
+                alertHandler(index);
+        }
+    }
 
-    public AndroidLogger()
+    static AndroidJavaClass _pluginClass;
+    static AndroidJavaObject _pluginInstance;
+
+    public static AndroidJavaClass PluginClass
     {
-        loggerClass = new AndroidJavaClass(LOGGER_CLASS_NAME);
-        loggerObject = loggerClass.CallStatic<AndroidJavaObject>("GetInstance");
+        get
+        {
+            if (_pluginClass == null)
+            {
+                _pluginClass = new AndroidJavaClass(LOGGER_CLASS_NAME);
+                AndroidJavaClass playerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+                AndroidJavaObject activity = playerClass.GetStatic<AndroidJavaObject>("activity");
+                _pluginClass.SetStatic<AndroidJavaObject>("activity", activity);
+            }
+            return _pluginClass;
+        }
+    }
+
+    public static AndroidJavaObject PluginInstance
+    {
+        get
+        {
+            if (_pluginInstance == null)
+            {
+                _pluginInstance = PluginClass.CallStatic<AndroidJavaObject>("GetInstance");
+            }
+            return _pluginInstance;
+        }
     }
 
     public override void Log(string str)
     {
-        loggerObject.Call("MyLog", str);
+        PluginInstance.Call("MyLog", str);
     }
 
     public override void DeleteAll()
     {
-        loggerObject.Call("DeleteAll");
+        PluginInstance.Call("DeleteAll");
     }
 
     public override List<string> GetAllLogs()
     {
         List<string> allLogs = new List<string>();
-        string text = loggerObject.Call<string>("GetAllLogs");
+        string text = PluginInstance.Call<string>("GetAllLogs");
         var logsArray = text.Split(SEP);
         allLogs.AddRange(logsArray);
         return allLogs;
     }
 
-    public override void ShowAlert(Action<bool> callback)
+    public override void ShowAlertView(string[] strings, System.Action<int> handler = null)
     {
         // Llama al plugn para mostrar la alerta
-        CreateAlert("Clear Logs and delete Logs.txt", "Are you sure?", () => { callback.Invoke(true); });
-        loggerObject.Call("ShowAlert");
-    }
+        if (strings.Length < 3)
+        {
+            Debug.LogError("AlertView requires at least 3 strings");
+            return;
+        }
 
-    private void CreateAlert(string title, string message, Action accept = null, Action decline = null)
-    {
-        AlertWindow alertWindow = new AlertWindow();
-        alertWindow.acceptAction = accept;
-        alertWindow.declineAction = decline;
-
-        loggerObject.Call("CreateAlert", new object[] { title, message, alertWindow });
+        PluginInstance.Call("ShowAlertView", new object[] { strings, new AlertViewCallback(handler) });
     }
 }
 
@@ -146,8 +181,8 @@ public class DefaultLogger : LoggerBase
         return new List<string>();
     }
 
-    public override void ShowAlert(Action<bool> callback)
+    public override void ShowAlertView(string[] strings, System.Action<int> handler = null)
     {
-        Debug.Log("ShowAlert");
+        Debug.Log("ShowAlertView");
     }
 }

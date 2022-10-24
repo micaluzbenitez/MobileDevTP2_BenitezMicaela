@@ -17,7 +17,7 @@ public class GameLogger {
     public static Activity activity;
     AlertDialog.Builder builder;
 
-    public static GameLogger GetInstance(String path) {
+    public static GameLogger GetInstance() {
         Log.d("", "GetInstance()");
         return instance;
     }
