@@ -52,7 +52,7 @@ public class GameLogger {
         }
         catch (IOException exp)
         {
-            Log.e("Exception","Failed to save log line, File couldnt be saved" + exp.toString());
+            Log.e("Exception","Failed to save log line, File couldn't be saved" + exp.toString());
         }
     }
 
@@ -96,41 +96,40 @@ public class GameLogger {
     }
 
     // ---------------------------------------- ALERT ---------------------------------------
-
-    public void CreateAlert(String title, String message, AlertWindow alertWindow)
+    public interface AlertViewCallback
     {
-        builder = new AlertDialog.Builder(activity);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setCancelable(false);
-        builder.setPositiveButton(
-                "YES",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.i(TAG, "Clicked from plugin - YES");
-                        alertWindow.OnAccept();
-                        dialog.cancel();
-                    }
-                }
-        );
-
-        builder.setNegativeButton(
-                "NO",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.i(TAG, "Clicked from plugin - NO");
-                        alertWindow.OnDecline();
-                        dialog.cancel();
-                    }
-                }
-        );
+        public void OnButtonTapped(int id);
     }
 
-    public void ShowAlert()
+    public void ShowAlertView(String[] strings, final AlertViewCallback callback)
     {
-        AlertDialog alert = builder.create();
-        alert.show();
+        if (strings.length < 3)
+        {
+            Log.i(TAG, "Error - expected at least 3 strings, got " + strings.length);
+            return;
+        }
+
+        DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int id)
+            {
+                dialogInterface.dismiss();
+                Log.i(TAG, "Tapped: " + id);
+                callback.OnButtonTapped(id);
+            }
+        };
+
+        AlertDialog alertDialog = new AlertDialog.Builder(activity)
+                .setTitle(strings[0])
+                .setMessage(strings[1])
+                .setCancelable(false)
+                .create();
+        alertDialog.setButton(alertDialog.BUTTON_NEUTRAL, strings[2], myClickListener);
+        if (strings.length > 3)
+            alertDialog.setButton(alertDialog.BUTTON_NEGATIVE, strings[3], myClickListener);
+        if (strings.length > 4)
+            alertDialog.setButton(alertDialog.BUTTON_POSITIVE, strings[4], myClickListener);
+        alertDialog.show();
     }
 }
