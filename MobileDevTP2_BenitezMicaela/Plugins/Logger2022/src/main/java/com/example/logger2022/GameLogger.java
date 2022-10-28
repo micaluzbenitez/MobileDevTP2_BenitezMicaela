@@ -1,29 +1,42 @@
 package com.example.logger2022;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import android.util.Log;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 
-public class GameLogger {
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class GameLogger
+{
     private static final GameLogger instance = new GameLogger();
     private static final String TAG = "Log22 => ";
 
-    public static Activity activity;
+    private static Activity activity;
     AlertDialog.Builder builder;
 
-    public static GameLogger GetInstance() {
+    static String logs = "";
+    static String filepath;
+    static File file;
+
+    public static GameLogger GetInstance(String path)
+    {
         Log.d("", "GetInstance()");
-        return instance;
+        filepath = path;
+        return  instance;
     }
 
     private GameLogger() { MyLog("Logger created"); }
     public void MyLog(String str) { Log.d(TAG, str); }
+
+    public static void ReceiveUnityActivity(Activity _activity)
+    {
+        activity = _activity;
+    }
 
     // ---------------------------------------- LOGS ----------------------------------------
 
@@ -31,105 +44,121 @@ public class GameLogger {
     {
         Log.d(TAG, "SendLog");
         Log.d(TAG, str);
+        logs += str;
     }
 
-    public void SaveLog(String str)
+    public void SaveLog()
     {
         Log.d(TAG, "SaveLog");
-        File path = activity.getFilesDir();
-        File file = new File(path, "savedLogs.text");
-        try
-        {
-            FileOutputStream stream = new FileOutputStream(file);
-            try
+
+        if(file == null) file = new File(filepath);
+        else file.delete();
+
+        try {
+            if(file.createNewFile())
             {
-                stream.write(str.getBytes());
+                FileOutputStream stream = new FileOutputStream(file);
+                try
+                {
+                    stream.write(logs.getBytes());
+                }
+                finally
+                {
+                    stream.close();
+                }
             }
-            finally
-            {
-                stream.close();
-            }
-        }
-        catch (IOException exp)
+
+        } catch (IOException e)
         {
-            Log.e("Exception","Failed to save log line, File couldn't be saved" + exp.toString());
+            e.printStackTrace();
+            Log.e("Exception","Failed to save log line, File couldn't be saved" + e.toString());
         }
     }
 
     public String GetAllLogs()
     {
         Log.d(TAG, "GetAllLogs");
-        File path = activity.getFilesDir();
-        File file = new File(path, "savedLogs.text");
-        if(!file.exists())
-            return  null;
 
-        int length = (int)file.length();
-        byte[] bytes = new byte[length];
+        File file = new File(filepath);
+        if (!file.exists()) return  null;
 
         try
         {
             FileInputStream stream = new FileInputStream(file);
+            byte[] bytes = new byte[(int) file.length()];
             try
             {
                 stream.read(bytes);
             }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                Log.e("Exception","Error getting logs from file savedLogs.text" + e.toString());
+            }
             finally
             {
-                stream.close();
+                try
+                {
+                    stream.close();
+                    logs = new String(bytes);
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                    Log.e("Exception","Error getting logs from file savedLogs.text" + e.toString());
+                }
             }
+
         }
-        catch(IOException exp)
+        catch (FileNotFoundException e)
         {
-            Log.e("Exception","Error getting logs from file savedLogs.text" + exp.toString());
+            e.printStackTrace();
+            Log.e("Exception","Error getting logs from file savedLogs.text" + e.toString());
         }
-        String logsGetFromFile = new String(bytes);
-        return  logsGetFromFile;
+
+        return logs;
     }
 
     public void DeleteAll()
     {
         Log.d(TAG, "DeleteAll");
-        File path = activity.getFilesDir();
-        File file = new File(path, "savedLogs.text");
+        logs = "";
         file.delete();
     }
 
     // ---------------------------------------- ALERT ---------------------------------------
-    public interface AlertViewCallback
+
+    public void ShowAlert(String title, String message, AlertCallback alertCallback)
     {
-        public void OnButtonTapped(int id);
-    }
+        builder = new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(
+                "YES",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i(TAG, "Clicked from plugin - YES");
+                        alertCallback.OnAccept();
+                        dialog.cancel();
+                    }
+                }
+        );
 
-    public void ShowAlertView(String[] strings, final AlertViewCallback callback)
-    {
-        if (strings.length < 3)
-        {
-            Log.i(TAG, "Error - expected at least 3 strings, got " + strings.length);
-            return;
-        }
+        builder.setNegativeButton(
+                "NO",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.i(TAG, "Clicked from plugin - NO");
+                        alertCallback.OnDecline();
+                        dialog.cancel();
+                    }
+                }
+        );
 
-        DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id)
-            {
-                dialogInterface.dismiss();
-                Log.i(TAG, "Tapped: " + id);
-                callback.OnButtonTapped(id);
-            }
-        };
-
-        AlertDialog alertDialog = new AlertDialog.Builder(activity)
-                .setTitle(strings[0])
-                .setMessage(strings[1])
-                .setCancelable(false)
-                .create();
-        alertDialog.setButton(alertDialog.BUTTON_NEUTRAL, strings[2], myClickListener);
-        if (strings.length > 3)
-            alertDialog.setButton(alertDialog.BUTTON_NEGATIVE, strings[3], myClickListener);
-        if (strings.length > 4)
-            alertDialog.setButton(alertDialog.BUTTON_POSITIVE, strings[4], myClickListener);
-        alertDialog.show();
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
