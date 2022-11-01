@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UI;
 
 namespace Shop
 {
     public class ShopBlade : MonoBehaviour
     {
+        [Header("UI Shop")]
+        public UIShop uiShop = null;
+
         [Header("Game data")]
         public GameData gameData = null;
 
@@ -40,6 +44,7 @@ namespace Shop
                     coinText.gameObject.SetActive(false);
                     unlocked.gameObject.SetActive(true);
                     colorBlade.unlock = true;
+                    uiShop.UpdateScore();
                 }
             }
 
