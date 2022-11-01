@@ -39,6 +39,7 @@ namespace UI
 
         private void Awake()
         {
+            optionsAnimator.SetBool("Idle", true);
             gameOverAnimator.SetBool("Idle", true);
             coinsLerper.unscaleTimer = true;
         }
