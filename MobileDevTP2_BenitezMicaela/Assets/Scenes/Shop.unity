@@ -471,6 +471,10 @@ PrefabInstance:
       value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
       objectReference: {fileID: 11400000, guid: 83b3ebe27e349d841a756b76366b8b3f, type: 2}
@@ -617,6 +621,10 @@ PrefabInstance:
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
       objectReference: {fileID: 11400000, guid: c057b204e3f5b874291ce56e232acbbb, type: 2}
@@ -762,6 +770,10 @@ PrefabInstance:
       propertyPath: cost
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
@@ -938,6 +950,10 @@ PrefabInstance:
       propertyPath: cost
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
@@ -1440,6 +1456,10 @@ PrefabInstance:
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
       objectReference: {fileID: 11400000, guid: 939b47a1cf1418d46bf1a91f46113bd7, type: 2}
@@ -1773,6 +1793,10 @@ PrefabInstance:
       propertyPath: cost
       value: 400
       objectReference: {fileID: 0}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
@@ -2223,7 +2247,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1885211792}
-  gameData: {fileID: 11400000, guid: b7e4b4ef13a4f814baf92696195baac4, type: 2}
   gameSceneName: Game
   mainMenuSceneName: MainMenu
 --- !u!114 &1133921059
@@ -2414,6 +2437,10 @@ PrefabInstance:
       propertyPath: cost
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
@@ -2860,6 +2887,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
       objectReference: {fileID: 11400000, guid: acb45a23c6098a54db23e413061b18aa, type: 2}
@@ -3159,6 +3190,10 @@ PrefabInstance:
       propertyPath: cost
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
@@ -3553,6 +3588,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: uiShop
+      value: 
+      objectReference: {fileID: 1133921058}
+    - target: {fileID: 941638671526747116, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: colorBlade
       value: 
       objectReference: {fileID: 11400000, guid: 0bf7745e6e7919744a83c17930ef73b3, type: 2}
@@ -3602,6 +3641,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1264282978196858241, guid: 4efebb1665f248142985c362be29badd, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1264282978196858241, guid: 4efebb1665f248142985c362be29badd, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6008416086019117648, guid: 4efebb1665f248142985c362be29badd, type: 3}
