@@ -12,7 +12,7 @@ namespace Entities
         public float maxLifeTime = 5f;
         [Range(0f, 1f)] public float bombChance = 0.05f;
 
-        [Header("Spawner data")]
+        [Header("Spawner")]
         public float startSpawnDelay = 2f;
         public float maxSpawnDelay = 1f;
         public float minSpawnDelay = 0.25f;
