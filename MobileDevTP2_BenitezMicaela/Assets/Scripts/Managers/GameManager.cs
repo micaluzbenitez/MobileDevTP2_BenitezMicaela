@@ -14,6 +14,7 @@ namespace Managers
         [Header("Game data")]
         public GameData gameData = null;
         public float gameDuration = 0;
+        public int totalLifes = 0;
 
         [Header("Spawner")]
         public Spawner spawner = null;
@@ -25,6 +26,8 @@ namespace Managers
         [Header("UI")]
         public UIGame uiGame = null;
 
+        private int lifes = 0;
+        private bool finishGame = false;
         private Timer gameTimer = new Timer();
 
         private void Start()
@@ -79,26 +82,12 @@ namespace Managers
 
         private void NewGame()
         {
+            finishGame = false;
+            lifes = totalLifes;
             uiGame.FadeToClear();
             spawner.enabled = true;
             blade.enabled = true;
-            uiGame.RestartScore();
-            ClearScene();
-        }
-
-        private void ClearScene()
-        {
-            Fruit[] fruits = FindObjectsOfType<Fruit>();
-            foreach (Fruit fruit in fruits)
-            {
-                Destroy(fruit.gameObject);
-            }
-
-            Bomb[] bombs = FindObjectsOfType<Bomb>();
-            foreach (Bomb bomb in bombs)
-            {
-                Destroy(bomb.gameObject);
-            }
+            uiGame.RestartUI();
         }
 
         private void UpdateGameTimer()
@@ -118,10 +107,14 @@ namespace Managers
 
         private void FinishGame(bool gameOver)
         {
-            spawner.enabled = false;
-            blade.enabled = false;
-            uiGame.FinishGame(gameOver);
-            uiGame.FadeToBlack();
+            if (!finishGame)
+            {
+                spawner.enabled = false;
+                blade.enabled = false;
+                uiGame.FinishGame(gameOver);
+                uiGame.FadeToBlack();
+                finishGame = true;
+            }
         }
 
         public void UpdateScore(int points)
@@ -129,14 +122,40 @@ namespace Managers
             uiGame.UpdateScore(points);
         }
 
-        public void Win()
+        public void LoseLife()
+        {
+            if (!finishGame)
+            {
+                lifes--;
+                uiGame.UpdateLifes(lifes);
+                if (lifes <= 0) Lose();
+            }
+        }
+
+        private void Win()
         {
             FinishGame(false);
         }
 
         public void Lose()
         {
+            uiGame.UpdateLifes(0);
             FinishGame(true);
+        }
+
+        public void ClearScene()
+        {
+            Fruit[] fruits = FindObjectsOfType<Fruit>();
+            foreach (Fruit fruit in fruits)
+            {
+                Destroy(fruit.gameObject);
+            }
+
+            Bomb[] bombs = FindObjectsOfType<Bomb>();
+            foreach (Bomb bomb in bombs)
+            {
+                Destroy(bomb.gameObject);
+            }
         }
     }
 }

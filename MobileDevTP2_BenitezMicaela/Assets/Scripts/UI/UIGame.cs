@@ -13,6 +13,9 @@ namespace UI
         [Header("UI")]
         public TMP_Text scoreText = null;
         public TMP_Text timerText = null;
+        public Image[] lifes = null;
+        public Sprite lifeComplete = null;
+        public Sprite loseLife = null;
         public Image fadeImage = null;
         public float fadeSpeed = 0f;
 
@@ -60,7 +63,11 @@ namespace UI
 
             if (fadeLerper.Reached)
             {
-                if (finishGame) SetFinishGamePanel();
+                if (finishGame)
+                {
+                    SetFinishGamePanel();
+                    GameManager.Instance.ClearScene();
+                }
             }
         }
 
@@ -98,10 +105,15 @@ namespace UI
             }
         }
 
-        public void RestartScore()
+        public void RestartUI()
         {
             score = 0;
             scoreText.text = "Score: " + score;
+
+            for (int i = 0; i < lifes.Length; i++)
+            {
+                lifes[i].sprite = lifeComplete;
+            }
         }
 
         public void UpdateScore(int points)
@@ -116,6 +128,14 @@ namespace UI
             float minutes = Mathf.FloorToInt(timer / 60);
             float seconds = Mathf.FloorToInt(timer % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+
+        public void UpdateLifes(int actualLifes)
+        {
+            for (int i = 0; i < lifes.Length; i++)
+            {
+                if (!(i < actualLifes)) lifes[i].sprite = loseLife;
+            }
         }
 
         public void FinishGame(bool gameOver)

@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 4783801147462397055, guid: 84a375f9dac1e5148ae874f28ab7afff, type: 3}
   - {fileID: 4783801147462397055, guid: f2f67f88cdadfd24a96e8608dc3a5878, type: 3}
   bomb: {fileID: 657495101913612749, guid: c6c15eb8ff493b945aa5b764e0fba60f, type: 3}
-  maxLifeTime: 5
+  maxLifeTime: 4
   bombChance: 0.05
   startSpawnDelay: 2
   maxSpawnDelay: 1

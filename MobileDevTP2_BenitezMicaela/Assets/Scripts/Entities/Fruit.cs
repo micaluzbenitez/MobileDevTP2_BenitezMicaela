@@ -33,6 +33,11 @@ namespace Entities
             }
         }
 
+        private void OnDestroy()
+        {
+            if (whole.activeSelf) GameManager.Instance.LoseLife();
+        }
+
         private void Slice(Vector3 direction, Vector3 position, float force)
         {
             GameManager.Instance.UpdateScore(points);
