@@ -9,7 +9,7 @@ namespace Entities
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player")) GameManager.Instance.Explode();
+            if (other.CompareTag("Player")) GameManager.Instance.Lose();
         }
     }
 }

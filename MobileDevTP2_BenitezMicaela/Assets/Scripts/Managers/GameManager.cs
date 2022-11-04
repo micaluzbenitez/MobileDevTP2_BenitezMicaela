@@ -13,6 +13,7 @@ namespace Managers
 
         [Header("Game data")]
         public GameData gameData = null;
+        public float gameDuration = 0;
 
         [Header("Spawner")]
         public Spawner spawner = null;
@@ -24,8 +25,11 @@ namespace Managers
         [Header("UI")]
         public UIGame uiGame = null;
 
+        private Timer gameTimer = new Timer();
+
         private void Start()
         {
+            gameTimer.SetTimer(gameDuration, Timer.TIMER_MODE.DECREASE, true);
             level = PlayerPrefs.GetInt("Level");
             SetLevel();
             CheckBladeColor();
@@ -34,7 +38,9 @@ namespace Managers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.M)) PlayerPrefs.DeleteAll();
+            UpdateGameTimer();
+
+            if (Input.GetKeyDown(KeyCode.M)) PlayerPrefs.DeleteAll();            
         }
 
         private void OnEnable()
@@ -80,19 +86,6 @@ namespace Managers
             ClearScene();
         }
 
-        public void UpdateScore(int points)
-        {
-            uiGame.UpdateScore(points);
-        }
-
-        public void Explode()
-        {
-            spawner.enabled = false;
-            blade.enabled = false;
-            uiGame.GameOver();
-            uiGame.FadeToBlack();
-        }
-
         private void ClearScene()
         {
             Fruit[] fruits = FindObjectsOfType<Fruit>();
@@ -106,6 +99,44 @@ namespace Managers
             {
                 Destroy(bomb.gameObject);
             }
+        }
+
+        private void UpdateGameTimer()
+        {
+            if (gameTimer.Active)
+            {
+                gameTimer.UpdateTimer();
+                uiGame.UpdateTimer(gameTimer.CurrentTime);
+            }
+
+            if (gameTimer.ReachedTimer())
+            {
+                Win();
+                uiGame.UpdateTimer(-1);
+            }
+        }
+
+        private void FinishGame(bool gameOver)
+        {
+            spawner.enabled = false;
+            blade.enabled = false;
+            uiGame.FinishGame(gameOver);
+            uiGame.FadeToBlack();
+        }
+
+        public void UpdateScore(int points)
+        {
+            uiGame.UpdateScore(points);
+        }
+
+        public void Win()
+        {
+            FinishGame(false);
+        }
+
+        public void Lose()
+        {
+            FinishGame(true);
         }
     }
 }
