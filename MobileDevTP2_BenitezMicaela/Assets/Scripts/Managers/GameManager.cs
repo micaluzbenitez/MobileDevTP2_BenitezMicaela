@@ -9,22 +9,25 @@ namespace Managers
 {
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
-        [Header("Game data")]
-        public GameData gameData = null;
-
         [Header("Spawner")]
         public Spawner spawner = null;
 
         [Header("Blade")]
         public Blade blade = null;
+        public ColorBlade[] colors = null;
 
         [Header("UI")]
         public UIGame uiGame = null;
 
         private void Start()
         {
-            blade.bladeTrail.colorGradient = gameData.bladeColor;
+            CheckBladeColor();
             NewGame();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.M)) PlayerPrefs.DeleteAll();
         }
 
         private void OnEnable()
@@ -35,6 +38,15 @@ namespace Managers
         private void OnDisable()
         {
             uiGame.OnRestartGame -= NewGame;
+        }
+
+        private void CheckBladeColor()
+        {
+            for (int i = 0; i < colors.Length; i++)
+            {
+                if (colors[i].ID == PlayerPrefs.GetInt("BladeColor"))
+                    blade.bladeTrail.colorGradient = colors[i].color;
+            }
         }
 
         private void NewGame()

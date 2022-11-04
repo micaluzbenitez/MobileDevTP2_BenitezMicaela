@@ -11,9 +11,6 @@ namespace UI
         [Header("UI Shop")]
         public TMP_Text scoreText = null;
 
-        [Header("Game data")]
-        public GameData gameData = null;
-
         [Header("Scenes")]
         public string gameSceneName = "";
         public string mainMenuSceneName = "";
@@ -35,7 +32,7 @@ namespace UI
 
         public void UpdateScore()
         {
-            scoreText.text = gameData.totalCoins.ToString();
+            scoreText.text = PlayerPrefs.GetFloat("TotalCoins").ToString();
         }
     }
 }

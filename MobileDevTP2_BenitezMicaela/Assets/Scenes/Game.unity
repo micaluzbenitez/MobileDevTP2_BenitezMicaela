@@ -1856,9 +1856,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c596d76dff0aa044eabccb950e26b1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: b7e4b4ef13a4f814baf92696195baac4, type: 2}
   spawner: {fileID: 1062326136}
   blade: {fileID: 2057879867}
+  colors:
+  - {fileID: 11400000, guid: 53a440e6d5baab24fb809a9359b20013, type: 2}
+  - {fileID: 11400000, guid: c057b204e3f5b874291ce56e232acbbb, type: 2}
+  - {fileID: 11400000, guid: 939b47a1cf1418d46bf1a91f46113bd7, type: 2}
+  - {fileID: 11400000, guid: d7bd471559a901a408610123ae9a64e6, type: 2}
+  - {fileID: 11400000, guid: 83b3ebe27e349d841a756b76366b8b3f, type: 2}
+  - {fileID: 11400000, guid: acb45a23c6098a54db23e413061b18aa, type: 2}
+  - {fileID: 11400000, guid: 0bf7745e6e7919744a83c17930ef73b3, type: 2}
+  - {fileID: 11400000, guid: 66f93368f8e738a46a87f1176be644a2, type: 2}
+  - {fileID: 11400000, guid: f1a022e847f5df44aaafa6411290d83b, type: 2}
+  - {fileID: 11400000, guid: 53dce4e316f6d9948a202dc86165b16a, type: 2}
   uiGame: {fileID: 1355394655}
 --- !u!4 &1316190697
 Transform:
@@ -2034,7 +2044,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cbce139ead91d54086d971017f6d7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: b7e4b4ef13a4f814baf92696195baac4, type: 2}
   scoreText: {fileID: 1481062037}
   fadeImage: {fileID: 1766346267}
   fadeSpeed: 1

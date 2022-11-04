@@ -11,9 +11,6 @@ namespace Shop
         [Header("UI Shop")]
         public UIShop uiShop = null;
 
-        [Header("Game data")]
-        public GameData gameData = null;
-
         [Header("Button")]
         public Text coinText = null;
         public Text unlocked = null;
@@ -23,7 +20,7 @@ namespace Shop
 
         private void Awake()
         {
-            if (colorBlade.unlock)
+            if (PlayerPrefs.GetInt($"{colorBlade.ID}Unlocked") == 1)
             {
                 coinText.gameObject.SetActive(false);
                 unlocked.gameObject.SetActive(true);
@@ -36,19 +33,30 @@ namespace Shop
 
         public void ShopColorBlade()
         {
-            if (!colorBlade.unlock)
+            float totalCoins = PlayerPrefs.GetFloat("TotalCoins");
+
+            if (PlayerPrefs.GetInt($"{colorBlade.ID}Unlocked") == 0)
             {
-                if (gameData.totalCoins >= colorBlade.cost)
+                if (totalCoins >= colorBlade.cost)
                 {
-                    gameData.totalCoins -= colorBlade.cost;
+                    totalCoins -= colorBlade.cost;
+                    PlayerPrefs.SetFloat("TotalCoins", totalCoins);
+                    PlayerPrefs.Save();
+
                     coinText.gameObject.SetActive(false);
                     unlocked.gameObject.SetActive(true);
-                    colorBlade.unlock = true;
                     uiShop.UpdateScore();
+
+                    PlayerPrefs.SetInt($"{colorBlade.ID}Unlocked", 1);
+                    PlayerPrefs.SetInt("BladeColor", colorBlade.ID);
+                    PlayerPrefs.Save();
                 }
             }
-
-            if (colorBlade.unlock) gameData.bladeColor = colorBlade.color;
+            else
+            {
+                PlayerPrefs.SetInt("BladeColor", colorBlade.ID);
+                PlayerPrefs.Save();
+            }
         }
     }
 }

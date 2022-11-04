@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ef10d95b2922940b5046a9f2c9aa08, type: 3}
   m_Name: OrangeBlueBlade
   m_EditorClassIdentifier: 
+  ID: 1
   color:
     serializedVersion: 2
     key0: {r: 0.1137255, g: 0.09411766, b: 0.89019614, a: 1}

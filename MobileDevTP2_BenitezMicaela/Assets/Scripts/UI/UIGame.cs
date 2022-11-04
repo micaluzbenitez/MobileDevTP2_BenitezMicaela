@@ -10,9 +10,6 @@ namespace UI
 {
     public class UIGame : MonoBehaviour
     {
-        [Header("Game data")]
-        public GameData gameData = null;
-
         [Header("UI")]
         public TMP_Text scoreText = null;
         public Image fadeImage = null;
@@ -62,9 +59,12 @@ namespace UI
             {
                 if (gameOver)
                 {
-                    coinsLerper.SetLerperValues(gameData.totalCoins, gameData.totalCoins + score, coinsTextSpeed, Lerper<float>.LERPER_TYPE.STEP_SMOOTH, true);
-                    coinsText.text = "$" + gameData.totalCoins;
-                    gameData.totalCoins += score;
+                    float totalCoins = PlayerPrefs.GetFloat("TotalCoins");
+                    coinsLerper.SetLerperValues(totalCoins, totalCoins + score, coinsTextSpeed, Lerper<float>.LERPER_TYPE.STEP_SMOOTH, true);
+                    coinsText.text = "$" + totalCoins;
+                    totalCoins += score;
+                    PlayerPrefs.SetFloat("TotalCoins", totalCoins);
+                    PlayerPrefs.Save();
 
                     gameOverAnimator.SetBool("Idle", false);
                     gameOverAnimator.SetBool("Open", true);
