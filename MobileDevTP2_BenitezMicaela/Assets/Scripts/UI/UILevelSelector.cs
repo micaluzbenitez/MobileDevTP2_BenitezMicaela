@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 public class UILevelSelector : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Scenes")]
+    public string mainMenuSceneName = "";
 
-    // Update is called once per frame
-    void Update()
+    public void MainMenu()
     {
-        
+        LoaderManager.Instance.LoadScene(mainMenuSceneName);
     }
 }

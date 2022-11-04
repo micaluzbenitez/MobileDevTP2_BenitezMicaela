@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1885211792}
-  gameSceneName: Game
+  levelSelectorSceneName: LevelSelector
   mainMenuSceneName: MainMenu
 --- !u!114 &1133921059
 MonoBehaviour:

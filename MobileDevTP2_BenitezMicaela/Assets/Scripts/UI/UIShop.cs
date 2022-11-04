@@ -12,7 +12,7 @@ namespace UI
         public TMP_Text scoreText = null;
 
         [Header("Scenes")]
-        public string gameSceneName = "";
+        public string levelSelectorSceneName = "";
         public string mainMenuSceneName = "";
 
         private void Awake()
@@ -22,7 +22,7 @@ namespace UI
 
         public void Play()
         {
-            LoaderManager.Instance.LoadScene(gameSceneName);
+            LoaderManager.Instance.LoadScene(levelSelectorSceneName);
         }
 
         public void MainMenu()

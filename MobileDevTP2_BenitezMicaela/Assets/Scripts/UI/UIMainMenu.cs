@@ -8,13 +8,13 @@ namespace UI
     public class UIMainMenu : MonoBehaviour
     {
         [Header("Scenes")]
-        public string gameSceneName = "";
+        public string levelSelectorSceneName = "";
         public string shopSceneName = "";
         public string creditsSceneName = "";
 
         public void Play()
         {
-            LoaderManager.Instance.LoadScene(gameSceneName);
+            LoaderManager.Instance.LoadScene(levelSelectorSceneName);
         }
 
         public void Shop()
