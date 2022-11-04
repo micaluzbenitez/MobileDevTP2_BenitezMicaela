@@ -9,6 +9,11 @@ namespace Managers
 {
     public class GameManager : MonoBehaviourSingleton<GameManager>
     {
+        public int level = 0;
+
+        [Header("Game data")]
+        public GameData gameData = null;
+
         [Header("Spawner")]
         public Spawner spawner = null;
 
@@ -21,6 +26,8 @@ namespace Managers
 
         private void Start()
         {
+            level = PlayerPrefs.GetInt("Level");
+            SetLevel();
             CheckBladeColor();
             NewGame();
         }
@@ -40,12 +47,27 @@ namespace Managers
             uiGame.OnRestartGame -= NewGame;
         }
 
+        private void SetLevel()
+        {
+            for (int i = 0; i < gameData.levels.Count; i++)
+            {
+                if (gameData.levels[i].level == level)
+                {
+                    spawner.SetSpawner(gameData.levels[i].bombChance, gameData.levels[i].maxBombChance, gameData.levels[i].minSpawnDelay,
+                                       gameData.levels[i].increaseDifficult, gameData.levels[i].timePerChange, gameData.levels[i].maxBombChance,
+                                       gameData.levels[i].increaseBombChanceValue);
+                }
+            }
+        }
+
         private void CheckBladeColor()
         {
             for (int i = 0; i < colors.Length; i++)
             {
                 if (colors[i].ID == PlayerPrefs.GetInt("BladeColor"))
+                {
                     blade.bladeTrail.colorGradient = colors[i].color;
+                }
             }
         }
 

@@ -1856,6 +1856,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c596d76dff0aa044eabccb950e26b1dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
+  gameData: {fileID: 11400000, guid: da199fd54bbc47e47990fb6879566d24, type: 2}
   spawner: {fileID: 1062326136}
   blade: {fileID: 2057879867}
   colors:

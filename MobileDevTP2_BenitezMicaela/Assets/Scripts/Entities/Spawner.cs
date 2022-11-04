@@ -102,5 +102,16 @@ namespace Entities
             float force = Random.Range(minForce, maxForce);
             objectSpawned.GetComponent<Rigidbody>().AddForce(objectSpawned.transform.up * force, ForceMode.Impulse);
         }
+
+        public void SetSpawner(float bombChance, float maxSpawnDelay, float minSpawnDelay, bool increaseDifficult, float timePerChange, float maxBombChance, float increaseBombChanceValue)
+        {
+            this.bombChance = bombChance;
+            this.maxSpawnDelay = maxSpawnDelay;
+            this.minSpawnDelay = minSpawnDelay;
+            this.increaseDifficult = increaseDifficult;
+            this.timePerChange = timePerChange;
+            this.maxBombChance = maxBombChance;
+            this.increaseBombChanceValue = increaseBombChanceValue;
+        }
     }
 }
