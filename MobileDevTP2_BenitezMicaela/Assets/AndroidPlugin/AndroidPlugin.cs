@@ -2,6 +2,8 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public class AndroidPlugin : MonoBehaviour
 {
@@ -14,6 +16,10 @@ public class AndroidPlugin : MonoBehaviour
         logger = LoggerBase.CreateLogger();
         logger.logs = contentText;
         UpdateLogs();
+
+#if UNITY_ANDROID
+        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+#endif
     }
 
     #region UI_Events
@@ -41,6 +47,24 @@ public class AndroidPlugin : MonoBehaviour
         // Updatear logs en la pantalla
         logger.GetAllLogs();
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)contentText.transform.parent);
+    }
+
+    internal void ProcessAuthentication(SignInStatus status)
+    {
+#if UNITY_ANDROID
+        logger.Log("Loged: " + status.ToString());
+
+        if (status == SignInStatus.Success)
+        {
+            // Continue with Play Games Services
+        }
+        else
+        {
+            // Disable your integration with Play Games Services or show a login button
+            // to ask users to sign-in. Clicking it should call
+            // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
+        }
+#endif
     }
 }
 
