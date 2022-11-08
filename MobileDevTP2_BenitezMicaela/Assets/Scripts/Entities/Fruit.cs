@@ -11,6 +11,7 @@ namespace Entities
         public GameObject whole = null;
         public GameObject sliced = null;
         public ParticleSystem juice = null;
+        public ParticleSystem splash = null;
 
         [Header("Fruit data")]
         public int points = 1;
@@ -47,6 +48,7 @@ namespace Entities
 
             fruitCollider.enabled = false;
             juice.Play();
+            splash.Play();
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             sliced.transform.rotation = Quaternion.Euler(0f, 0f, angle);
