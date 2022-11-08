@@ -12,6 +12,7 @@ public class GameData : ScriptableObject
         public int level = 0;
 
         [Header("Bomb")]
+        public bool spawnerBombs = false;
         [Range(0f, 1f)] public float bombChance;
 
         [Header("Spawner")]

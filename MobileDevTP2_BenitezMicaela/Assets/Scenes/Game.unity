@@ -198,6 +198,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76347060}
   m_CullTransparentMesh: 1
+--- !u!1 &98056727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98056729}
+  - component: {fileID: 98056728}
+  m_Layer: 0
+  m_Name: RandomObjectFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &98056728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98056727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2eea970d35cd94c813b498b9bbcd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitPrefabs:
+  - {fileID: 4783801147462397055, guid: 2058101c3ddd1d34d954acbb3f665504, type: 3}
+  - {fileID: 4783801147462397055, guid: 13bd6b908e8ce5b409a1f57637bb68e7, type: 3}
+  - {fileID: 4783801147462397055, guid: 6b209c809b44fd04ab52db07195f6e0a, type: 3}
+  - {fileID: 4783801147462397055, guid: 84a375f9dac1e5148ae874f28ab7afff, type: 3}
+  - {fileID: 4783801147462397055, guid: f2f67f88cdadfd24a96e8608dc3a5878, type: 3}
+  bomb: {fileID: 657495101913612749, guid: c6c15eb8ff493b945aa5b764e0fba60f, type: 3}
+  bombChance: 0.05
+  increaseDifficult: 1
+  timePerChange: 20
+  maxBombChance: 0.5
+  increaseBombChanceValue: 0.05
+--- !u!4 &98056729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98056727}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &210986380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,6 +1519,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 731340817}
   m_CullTransparentMesh: 1
+--- !u!1 &873013075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873013077}
+  - component: {fileID: 873013076}
+  m_Layer: 0
+  m_Name: RandomFruitFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &873013076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873013075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aba558a70260fc48b7a692b3162e91e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fruitPrefabs:
+  - {fileID: 4783801147462397055, guid: 2058101c3ddd1d34d954acbb3f665504, type: 3}
+  - {fileID: 4783801147462397055, guid: 13bd6b908e8ce5b409a1f57637bb68e7, type: 3}
+  - {fileID: 4783801147462397055, guid: 6b209c809b44fd04ab52db07195f6e0a, type: 3}
+  - {fileID: 4783801147462397055, guid: f2f67f88cdadfd24a96e8608dc3a5878, type: 3}
+  - {fileID: 4783801147462397055, guid: 84a375f9dac1e5148ae874f28ab7afff, type: 3}
+--- !u!4 &873013077
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873013075}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &912086621
 GameObject:
   m_ObjectHideFlags: 0
@@ -4269,7 +4373,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4107661794254563757, guid: 3a6b9d4edc5be084cb8466509754b609, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4107661794254563757, guid: 3a6b9d4edc5be084cb8466509754b609, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4372,9 +4476,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5787213231717440446, guid: 62205d330dd1d3940b94df4a22e9c82a, type: 3}
+      propertyPath: spawnerFactory
+      value: 
+      objectReference: {fileID: 98056727}
+    - target: {fileID: 5787213231717440446, guid: 62205d330dd1d3940b94df4a22e9c82a, type: 3}
+      propertyPath: randomFruitFactory
+      value: 
+      objectReference: {fileID: 873013076}
+    - target: {fileID: 5787213231717440446, guid: 62205d330dd1d3940b94df4a22e9c82a, type: 3}
+      propertyPath: randomObjectFactory
+      value: 
+      objectReference: {fileID: 98056728}
     - target: {fileID: 5787213231717440447, guid: 62205d330dd1d3940b94df4a22e9c82a, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5787213231717440447, guid: 62205d330dd1d3940b94df4a22e9c82a, type: 3}
       propertyPath: m_LocalPosition.x

@@ -5,7 +5,7 @@ using Managers;
 
 namespace Entities
 {
-    public class Fruit : MonoBehaviour
+    public class Fruit : MonoBehaviour, IObject
     {
         [Header("Fruit components")]
         public GameObject whole = null;
@@ -58,6 +58,11 @@ namespace Entities
                 slice.velocity = fruitRigidbody.velocity;
                 slice.AddForceAtPosition(direction * force, position, ForceMode.Impulse);
             }
+        }
+
+        public GameObject GetGO()
+        {
+            return gameObject;
         }
     }
 }

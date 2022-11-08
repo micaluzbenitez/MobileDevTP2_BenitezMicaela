@@ -7,12 +7,12 @@ namespace Entities
     public class Spawner : MonoBehaviour
     {
         [Header("Fruits and bomb")]
-        public GameObject[] fruitPrefabs = null;
-        public GameObject bomb = null;
         public float maxLifeTime = 5f;
-        [Range(0f, 1f)] public float bombChance = 0.05f;
 
         [Header("Spawner")]
+        public bool spawnerBombs = false;
+        public RandomFruitFactory randomFruitFactory = null;
+        public RandomObjectFactory randomObjectFactory = null;
         public float startSpawnDelay = 2f;
         public float maxSpawnDelay = 1f;
         public float minSpawnDelay = 0.25f;
@@ -21,23 +21,11 @@ namespace Entities
         public float maxForce = 22f;
         public float minForce = 18f;
 
-        [Header("Difficult")]
-        public bool increaseDifficult = false;
-        public float timePerChange = 0f;
-        [Range(0f, 1f)] public float maxBombChance = 0f;
-        public float increaseBombChanceValue = 0f;
-
         private Collider spawnArea = null;
-        private float difficultTimer = 0f;
 
         private void Awake()
         {
             spawnArea = GetComponent<Collider>();
-        }
-
-        private void Update()
-        {
-            IncreaseGameDifficult();
         }
 
         private void OnEnable()
@@ -50,37 +38,24 @@ namespace Entities
             StopAllCoroutines();
         }
 
-        private void IncreaseGameDifficult()
-        {
-            if (increaseDifficult && (bombChance < maxBombChance))
-            {
-                difficultTimer += Time.deltaTime;
-
-                if (difficultTimer > timePerChange)
-                {
-                    bombChance += increaseBombChanceValue;
-                    if (bombChance > maxBombChance) bombChance = maxBombChance;
-                    difficultTimer = 0f;
-                }
-            }
-        }
-
         private IEnumerator Spawn()
         {
             yield return new WaitForSeconds(startSpawnDelay);
 
             while (enabled)
-            {
-                GameObject prefab = null;
-                if (Random.value < bombChance) prefab = bomb;
-                else prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
-
-                GameObject instantiate = Instantiate(prefab, CalculatePosition(), CalculateRotation());
+            {     
+                GameObject instantiate = Instantiate(FindSpawner().GetObject().GetGO(), CalculatePosition(), CalculateRotation());
                 CalculateSpawnForce(instantiate);
                 Destroy(instantiate, maxLifeTime);
 
                 yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
             }
+        }
+
+        private ISpawner FindSpawner()
+        {
+            if (spawnerBombs) return randomObjectFactory.GetComponent<ISpawner>();
+            else return randomFruitFactory.GetComponent<ISpawner>();
         }
 
         private Vector3 CalculatePosition()
@@ -103,15 +78,12 @@ namespace Entities
             objectSpawned.GetComponent<Rigidbody>().AddForce(objectSpawned.transform.up * force, ForceMode.Impulse);
         }
 
-        public void SetSpawner(float bombChance, float maxSpawnDelay, float minSpawnDelay, bool increaseDifficult, float timePerChange, float maxBombChance, float increaseBombChanceValue)
+        public void SetSpawner(bool spawnerBombs, float maxSpawnDelay, float minSpawnDelay, float bombChance, bool increaseDifficult, float timePerChange, float maxBombChance, float increaseBombChanceValue)
         {
-            this.bombChance = bombChance;
+            this.spawnerBombs = spawnerBombs;
             this.maxSpawnDelay = maxSpawnDelay;
             this.minSpawnDelay = minSpawnDelay;
-            this.increaseDifficult = increaseDifficult;
-            this.timePerChange = timePerChange;
-            this.maxBombChance = maxBombChance;
-            this.increaseBombChanceValue = increaseBombChanceValue;
+            if (spawnerBombs) randomObjectFactory.SetBombSpawner(bombChance, increaseDifficult, timePerChange, maxBombChance, increaseBombChanceValue);
         }
     }
 }

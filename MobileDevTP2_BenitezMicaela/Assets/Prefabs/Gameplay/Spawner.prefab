@@ -57,15 +57,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 118d21e4793d9124aa1ed2d4e6ca6fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitPrefabs:
-  - {fileID: 4783801147462397055, guid: 2058101c3ddd1d34d954acbb3f665504, type: 3}
-  - {fileID: 4783801147462397055, guid: 13bd6b908e8ce5b409a1f57637bb68e7, type: 3}
-  - {fileID: 4783801147462397055, guid: 6b209c809b44fd04ab52db07195f6e0a, type: 3}
-  - {fileID: 4783801147462397055, guid: 84a375f9dac1e5148ae874f28ab7afff, type: 3}
-  - {fileID: 4783801147462397055, guid: f2f67f88cdadfd24a96e8608dc3a5878, type: 3}
-  bomb: {fileID: 657495101913612749, guid: c6c15eb8ff493b945aa5b764e0fba60f, type: 3}
   maxLifeTime: 4
-  bombChance: 0.05
+  spawnerBombs: 1
+  randomFruitFactory: {fileID: 0}
+  randomObjectFactory: {fileID: 0}
   startSpawnDelay: 2
   maxSpawnDelay: 1
   minSpawnDelay: 0.25
@@ -73,7 +68,3 @@ MonoBehaviour:
   minAngle: -15
   maxForce: 22
   minForce: 18
-  increaseDifficult: 1
-  timePerChange: 20
-  maxBombChance: 0.5
-  increaseBombChanceValue: 0.05
