@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +8,7 @@ using Managers;
 
 namespace UI
 {
-    public class UIGame : MonoBehaviour
+    public class UIGame : MonoBehaviour, IObservable
     {
         [Header("UI")]
         public TMP_Text scoreText = null;
@@ -38,7 +38,7 @@ namespace UI
         private ColorLerper fadeLerper = new ColorLerper();
         private FloatLerper coinsLerper = new FloatLerper();
 
-        public Action OnRestartGame = null;
+        private List<IObserver> observers = new List<IObserver>();
 
         private void Awake()
         {
@@ -169,7 +169,7 @@ namespace UI
 
         public void Replay()
         {
-            OnRestartGame?.Invoke();
+            Notify();
             finishGameAnimator.SetBool("Open", false);
             Time.timeScale = 1;
         }
@@ -186,6 +186,24 @@ namespace UI
             LoaderManager.Instance.LoadScene(mainMenuSceneName);
             finishGameAnimator.SetBool("Open", false);
             Time.timeScale = 1;
+        }
+
+        public void Attach(IObserver observer)
+        {
+            observers.Add(observer);
+        }
+
+        public void Detach(IObserver observer)
+        {
+            observers.Remove(observer);
+        }
+
+        public void Notify()
+        {
+            foreach (var observer in observers)
+            {
+                observer.Update(this);
+            }
         }
     }
 }

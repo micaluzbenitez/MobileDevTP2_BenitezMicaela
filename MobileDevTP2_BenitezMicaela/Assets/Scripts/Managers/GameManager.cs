@@ -7,7 +7,7 @@ using UI;
 
 namespace Managers
 {
-    public class GameManager : MonoBehaviourSingleton<GameManager>
+    public class GameManager : MonoBehaviourSingleton<GameManager>, IObserver
     {
         public int level = 0;
 
@@ -48,12 +48,12 @@ namespace Managers
 
         private void OnEnable()
         {
-            uiGame.OnRestartGame += NewGame;
+            uiGame.Attach(this);
         }
 
         private void OnDisable()
         {
-            uiGame.OnRestartGame -= NewGame;
+            uiGame.Detach(this);
         }
 
         private void SetLevel()
@@ -78,16 +78,6 @@ namespace Managers
                     blade.bladeTrail.colorGradient = colors[i].color;
                 }
             }
-        }
-
-        private void NewGame()
-        {
-            finishGame = false;
-            lifes = totalLifes;
-            uiGame.FadeToClear();
-            spawner.enabled = true;
-            blade.enabled = true;
-            uiGame.RestartUI();
         }
 
         private void UpdateGameTimer()
@@ -115,6 +105,16 @@ namespace Managers
                 uiGame.FadeToBlack();
                 finishGame = true;
             }
+        }
+
+        private void NewGame()
+        {
+            finishGame = false;
+            lifes = totalLifes;
+            uiGame.FadeToClear();
+            spawner.enabled = true;
+            blade.enabled = true;
+            uiGame.RestartUI();
         }
 
         public void UpdateScore(int points)
@@ -156,6 +156,11 @@ namespace Managers
             {
                 Destroy(bomb.gameObject);
             }
+        }
+
+        public void Update(IObservable observable)
+        {
+            NewGame();
         }
     }
 }
