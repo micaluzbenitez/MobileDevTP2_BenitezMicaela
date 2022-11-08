@@ -111,8 +111,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whole: {fileID: 7170476383190940188}
   sliced: {fileID: 7170476384658424062}
-  juice: {fileID: 3361946461075661068}
-  splash: {fileID: 9148353756482578424}
+  effects:
+  - {fileID: 8986427428941432606}
+  - {fileID: 2854902466000674136}
   points: 1
 --- !u!1 &9148353756482578426
 GameObject:
@@ -125,6 +126,7 @@ GameObject:
   - component: {fileID: 9148353756482578423}
   - component: {fileID: 9148353756482578424}
   - component: {fileID: 9148353756482578425}
+  - component: {fileID: 2854902466000674136}
   m_Layer: 0
   m_Name: Splash
   m_TagString: Untagged
@@ -4808,6 +4810,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2854902466000674136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148353756482578426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b685b5f55b65e6e4aa459bc59244181a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 9148353756482578424}
 --- !u!1 &9152402720924424176
 GameObject:
   m_ObjectHideFlags: 0
@@ -4819,6 +4834,7 @@ GameObject:
   - component: {fileID: 701162137634234847}
   - component: {fileID: 3361946461075661068}
   - component: {fileID: 2853190917532067248}
+  - component: {fileID: 8986427428941432606}
   m_Layer: 0
   m_Name: Juice
   m_TagString: Untagged
@@ -9670,6 +9686,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8986427428941432606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152402720924424176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b685b5f55b65e6e4aa459bc59244181a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 3361946461075661068}
 --- !u!1001 &8017480005169298863
 PrefabInstance:
   m_ObjectHideFlags: 0

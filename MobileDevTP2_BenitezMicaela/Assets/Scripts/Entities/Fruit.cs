@@ -5,13 +5,12 @@ using Managers;
 
 namespace Entities
 {
-    public class Fruit : MonoBehaviour, IObject
+    public class Fruit : Composite, IObject
     {
         [Header("Fruit components")]
         public GameObject whole = null;
         public GameObject sliced = null;
-        public ParticleSystem juice = null;
-        public ParticleSystem splash = null;
+        public List<Composite> effects = null;
 
         [Header("Fruit data")]
         public int points = 1;
@@ -47,8 +46,7 @@ namespace Entities
             sliced.SetActive(true);
 
             fruitCollider.enabled = false;
-            juice.Play();
-            splash.Play();
+            Play();
 
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             sliced.transform.rotation = Quaternion.Euler(0f, 0f, angle);
@@ -59,6 +57,14 @@ namespace Entities
             {
                 slice.velocity = fruitRigidbody.velocity;
                 slice.AddForceAtPosition(direction * force, position, ForceMode.Impulse);
+            }
+        }
+
+        public override void Play()
+        {
+            foreach (var effect in effects)
+            {
+                effect.Play();
             }
         }
 
