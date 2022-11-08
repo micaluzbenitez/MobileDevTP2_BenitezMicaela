@@ -62,7 +62,7 @@ namespace Managers
             {
                 if (gameData.levels[i].level == level)
                 {
-                    spawner.SetSpawner(gameData.levels[i].bombChance, gameData.levels[i].maxBombChance, gameData.levels[i].minSpawnDelay,
+                    spawner.SetSpawner(gameData.levels[i].bombChance, gameData.levels[i].maxSpawnDelay, gameData.levels[i].minSpawnDelay,
                                        gameData.levels[i].increaseDifficult, gameData.levels[i].timePerChange, gameData.levels[i].maxBombChance,
                                        gameData.levels[i].increaseBombChanceValue);
                 }
