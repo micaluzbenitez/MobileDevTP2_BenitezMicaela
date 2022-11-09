@@ -19,6 +19,9 @@ namespace UI
         public Image fadeImage = null;
         public float fadeSpeed = 0f;
 
+        [Header("Tutorial")]
+        public Animator tutorialAnimator = null;
+
         [Header("Options")]
         public Animator optionsAnimator = null;
 
@@ -45,6 +48,7 @@ namespace UI
             optionsAnimator.SetBool("Idle", true);
             finishGameAnimator.SetBool("Idle", true);
             coinsLerper.unscaleTimer = true;
+            Tutorial();
         }
 
         private void Update()
@@ -152,6 +156,19 @@ namespace UI
         public void FadeToClear()
         {
             fadeLerper.SetLerperValues(Color.black, Color.clear, fadeSpeed, Lerper<Color>.LERPER_TYPE.STEP_SMOOTH, true);
+        }
+
+        public void Tutorial()
+        {
+            tutorialAnimator.SetBool("Idle", false);
+            tutorialAnimator.SetBool("Open", true);
+            Time.timeScale = 0;
+        }
+
+        public void CloseTutorial()
+        {
+            tutorialAnimator.SetBool("Open", false);
+            Time.timeScale = 1;
         }
 
         public void Options()
