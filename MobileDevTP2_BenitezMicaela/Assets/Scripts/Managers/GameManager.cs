@@ -34,7 +34,6 @@ namespace Managers
         private void Start()
         {
             gameTimer.SetTimer(gameDuration, Timer.TIMER_MODE.DECREASE, true);
-            level = PlayerPrefs.GetInt("Level");
             SetLevel();
             CheckBladeColor();
             NewGame();
@@ -55,8 +54,10 @@ namespace Managers
             uiGame.Detach(this);
         }
 
-        private void SetLevel()
+        public void SetLevel()
         {
+            level = PlayerPrefs.GetInt("Level");
+
             for (int i = 0; i < gameData.levels.Count; i++)
             {
                 if (gameData.levels[i].level == level)

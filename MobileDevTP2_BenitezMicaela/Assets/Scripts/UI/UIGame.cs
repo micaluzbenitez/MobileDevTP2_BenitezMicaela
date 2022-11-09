@@ -28,12 +28,15 @@ namespace UI
         [Header("Finish game")]
         public Animator winGameAnimator = null;
         public Animator loseGameAnimator = null;
+        public GameObject nextLevelButton = null;
+        public GameObject levelSelectionButton = null;
         public TMP_Text coinsText = null;
         public float coinsTextSpeed = 0f;
 
         [Header("Scenes")]
         public string shopSceneName = "";
         public string mainMenuSceneName = "";
+        public string levelSelectorSceneName = "";
 
         private int score = 0;
         private bool finishGame = false;
@@ -55,7 +58,7 @@ namespace UI
         private void Update()
         {
             UpdateFade();
-            CalculateTotalCoins();
+            TotalCoinsLerper();
         }
 
         private void UpdateFade()
@@ -82,12 +85,19 @@ namespace UI
             {
                 winGameAnimator.SetBool("Idle", false);
                 winGameAnimator.SetBool("Open", true);
-                float totalCoins = PlayerPrefs.GetFloat("TotalCoins");
-                coinsLerper.SetLerperValues(totalCoins, totalCoins + score, coinsTextSpeed, Lerper<float>.LERPER_TYPE.STEP_SMOOTH, true);
-                coinsText.text = "$" + totalCoins;
-                totalCoins += score;
-                PlayerPrefs.SetFloat("TotalCoins", totalCoins);
-                PlayerPrefs.Save();
+
+                if (PlayerPrefs.GetInt("Level") == 5)
+                {
+                    nextLevelButton.SetActive(false);
+                    levelSelectionButton.SetActive(true);
+                }
+                else
+                {
+                    nextLevelButton.SetActive(true);
+                    levelSelectionButton.SetActive(false);
+                }
+
+                CalculateTotalCoins();
             }
             else
             {
@@ -100,6 +110,16 @@ namespace UI
         }
 
         private void CalculateTotalCoins()
+        {
+            float totalCoins = PlayerPrefs.GetFloat("TotalCoins");
+            coinsLerper.SetLerperValues(totalCoins, totalCoins + score, coinsTextSpeed, Lerper<float>.LERPER_TYPE.STEP_SMOOTH, true);
+            coinsText.text = "$" + totalCoins;
+            totalCoins += score;
+            PlayerPrefs.SetFloat("TotalCoins", totalCoins);
+            PlayerPrefs.Save();
+        }
+
+        private void TotalCoinsLerper()
         {
             if (coinsLerper.Active)
             {
@@ -186,6 +206,8 @@ namespace UI
         public void NextLevel()
         {
             PlayAgain(winGameAnimator);
+            PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
+            GameManager.Instance.SetLevel();
         }
 
         public void Replay()
@@ -199,6 +221,12 @@ namespace UI
             FadeToClear();
             RestartUI();
             panel.SetBool("Open", false);
+            Time.timeScale = 1;
+        }
+
+        public void LevelSelector()
+        {
+            LoaderManager.Instance.LoadScene(levelSelectorSceneName);
             Time.timeScale = 1;
         }
 
