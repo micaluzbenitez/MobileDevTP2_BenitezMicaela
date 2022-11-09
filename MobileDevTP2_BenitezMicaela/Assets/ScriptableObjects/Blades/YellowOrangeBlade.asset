@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ef10d95b2922940b5046a9f2c9aa08, type: 3}
   m_Name: YellowOrangeBlade
   m_EditorClassIdentifier: 
-  ID: 6
+  ID: 7
   color:
     serializedVersion: 2
     key0: {r: 1, g: 0.3254902, b: 0.06666667, a: 1}
@@ -43,4 +43,3 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   cost: 400
-  unlock: 0

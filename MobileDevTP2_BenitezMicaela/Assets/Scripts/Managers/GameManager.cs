@@ -41,9 +41,7 @@ namespace Managers
 
         private void Update()
         {
-            UpdateGameTimer();
-
-            if (Input.GetKeyDown(KeyCode.M)) PlayerPrefs.DeleteAll();            
+            UpdateGameTimer();          
         }
 
         private void OnEnable()

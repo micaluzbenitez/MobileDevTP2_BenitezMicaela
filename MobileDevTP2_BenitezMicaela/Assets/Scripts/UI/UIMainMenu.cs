@@ -25,19 +25,23 @@ namespace UI
         {
             optionsAnimator.SetBool("Idle", false);
             optionsAnimator.SetBool("Open", true);
-            Time.timeScale = 0;
         }
 
         public void Logs()
         {
             LoaderManager.Instance.LoadScene(logsSceneName);
-            Time.timeScale = 1;
+        }
+
+        public void ResetProgress()
+        {
+            PlayerPrefs.DeleteAll();
+            PlayerPrefs.SetInt("BladeColor", 0);
+            PlayerPrefs.Save();
         }
 
         public void CloseOptions()
         {
             optionsAnimator.SetBool("Open", false);
-            Time.timeScale = 1;
         }
 
         public void Play()
