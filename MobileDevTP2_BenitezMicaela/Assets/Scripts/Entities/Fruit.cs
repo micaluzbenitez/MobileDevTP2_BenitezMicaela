@@ -29,7 +29,11 @@ namespace Entities
             if (other.CompareTag("Player"))
             {
                 Blade blade = other.GetComponent<Blade>();
-                if (blade) Slice(blade.direction, blade.transform.position, blade.sliceForce);
+                if (blade)
+                {
+                    Handheld.Vibrate();
+                    Slice(blade.direction, blade.transform.position, blade.sliceForce);
+                }
             }
         }
 

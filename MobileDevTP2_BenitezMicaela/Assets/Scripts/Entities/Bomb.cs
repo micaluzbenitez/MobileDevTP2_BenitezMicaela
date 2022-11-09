@@ -9,7 +9,11 @@ namespace Entities
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player")) GameManager.Instance.Lose();
+            if (other.CompareTag("Player"))
+            {
+                Handheld.Vibrate();
+                GameManager.Instance.Lose();
+            }
         }
 
         public GameObject GetGO()
