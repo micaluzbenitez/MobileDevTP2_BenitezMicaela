@@ -19,6 +19,7 @@ namespace UI
         private void Awake()
         {
             optionsAnimator.SetBool("Idle", true);
+            if (PlayerPrefs.GetInt("Level1") == 0) PlayerPrefs.SetInt("Level1", 1);
         }
 
         public void Options()
@@ -35,7 +36,7 @@ namespace UI
         public void ResetProgress()
         {
             PlayerPrefs.DeleteAll();
-            PlayerPrefs.SetInt("BladeColor", 0);
+            PlayerPrefs.SetInt("Level1", 1);
             PlayerPrefs.Save();
         }
 

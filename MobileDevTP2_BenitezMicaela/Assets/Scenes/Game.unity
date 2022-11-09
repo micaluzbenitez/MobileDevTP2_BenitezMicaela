@@ -2971,6 +2971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 0
+  totalLevels: 5
   gameData: {fileID: 11400000, guid: da199fd54bbc47e47990fb6879566d24, type: 2}
   gameDuration: 60
   totalLifes: 3

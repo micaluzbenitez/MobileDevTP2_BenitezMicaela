@@ -10,6 +10,7 @@ namespace Managers
     public class GameManager : MonoBehaviourSingleton<GameManager>, IObserver
     {
         public int level = 0;
+        public int totalLevels = 0;
 
         [Header("Game data")]
         public GameData gameData = null;
@@ -132,6 +133,11 @@ namespace Managers
 
         private void Win()
         {
+            if (level < totalLevels && PlayerPrefs.GetInt($"Level{level + 1}") == 0)
+            {
+                PlayerPrefs.SetInt($"Level{level + 1}", 1);
+            }
+            
             FinishGame(false);
         }
 
