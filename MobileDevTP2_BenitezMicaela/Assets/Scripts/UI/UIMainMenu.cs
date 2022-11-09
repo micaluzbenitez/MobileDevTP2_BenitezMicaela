@@ -11,6 +11,34 @@ namespace UI
         public string levelSelectorSceneName = "";
         public string shopSceneName = "";
         public string creditsSceneName = "";
+        public string logsSceneName = "";
+
+        [Header("Options")]
+        public Animator optionsAnimator = null;
+
+        private void Awake()
+        {
+            optionsAnimator.SetBool("Idle", true);
+        }
+
+        public void Options()
+        {
+            optionsAnimator.SetBool("Idle", false);
+            optionsAnimator.SetBool("Open", true);
+            Time.timeScale = 0;
+        }
+
+        public void Logs()
+        {
+            LoaderManager.Instance.LoadScene(logsSceneName);
+            Time.timeScale = 1;
+        }
+
+        public void CloseOptions()
+        {
+            optionsAnimator.SetBool("Open", false);
+            Time.timeScale = 1;
+        }
 
         public void Play()
         {

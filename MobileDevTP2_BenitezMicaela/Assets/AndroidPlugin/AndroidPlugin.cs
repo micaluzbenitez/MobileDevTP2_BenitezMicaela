@@ -2,12 +2,17 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Managers;
+
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 
 public class AndroidPlugin : MonoBehaviour
 {
     [SerializeField] private TMP_Text contentText = null;
+
+    [Header("Scenes")]
+    public string mainMenuSceneName = "";
 
     private LoggerBase logger = null;
 
@@ -65,6 +70,11 @@ public class AndroidPlugin : MonoBehaviour
             // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
         }
 #endif
+    }
+
+    public void MainMenu()
+    {
+        LoaderManager.Instance.LoadScene(mainMenuSceneName);
     }
 }
 
