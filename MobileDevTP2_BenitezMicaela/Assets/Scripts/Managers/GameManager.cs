@@ -110,10 +110,9 @@ namespace Managers
         {
             finishGame = false;
             lifes = totalLifes;
-            uiGame.FadeToClear();
             spawner.enabled = true;
             blade.enabled = true;
-            uiGame.RestartUI();
+            gameTimer.SetTimer(gameDuration, Timer.TIMER_MODE.DECREASE, true);
         }
 
         public void UpdateScore(int points)

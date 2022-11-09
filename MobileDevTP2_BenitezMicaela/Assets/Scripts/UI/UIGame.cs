@@ -26,9 +26,9 @@ namespace UI
         public Animator optionsAnimator = null;
 
         [Header("Finish game")]
-        public Animator finishGameAnimator = null;
+        public Animator winGameAnimator = null;
+        public Animator loseGameAnimator = null;
         public TMP_Text coinsText = null;
-        public TMP_Text gameOverText = null;
         public float coinsTextSpeed = 0f;
 
         [Header("Scenes")]
@@ -46,7 +46,8 @@ namespace UI
         private void Awake()
         {
             optionsAnimator.SetBool("Idle", true);
-            finishGameAnimator.SetBool("Idle", true);
+            winGameAnimator.SetBool("Idle", true);
+            loseGameAnimator.SetBool("Idle", true);
             coinsLerper.unscaleTimer = true;
             Tutorial();
         }
@@ -79,8 +80,8 @@ namespace UI
         {
             if (!gameOver)
             {
-                gameOverText.gameObject.SetActive(false);
-                coinsText.gameObject.SetActive(true);
+                winGameAnimator.SetBool("Idle", false);
+                winGameAnimator.SetBool("Open", true);
                 float totalCoins = PlayerPrefs.GetFloat("TotalCoins");
                 coinsLerper.SetLerperValues(totalCoins, totalCoins + score, coinsTextSpeed, Lerper<float>.LERPER_TYPE.STEP_SMOOTH, true);
                 coinsText.text = "$" + totalCoins;
@@ -90,12 +91,10 @@ namespace UI
             }
             else
             {
-                coinsText.gameObject.SetActive(false);
-                gameOverText.gameObject.SetActive(true);
+                loseGameAnimator.SetBool("Idle", false);
+                loseGameAnimator.SetBool("Open", true);
             }
 
-            finishGameAnimator.SetBool("Idle", false);
-            finishGameAnimator.SetBool("Open", true);
             Time.timeScale = 0;
             finishGame = false;
         }
@@ -184,24 +183,34 @@ namespace UI
             Time.timeScale = 1;
         }
 
+        public void NextLevel()
+        {
+            PlayAgain(winGameAnimator);
+        }
+
         public void Replay()
         {
+            PlayAgain(loseGameAnimator);
+        }
+
+        public void PlayAgain(Animator panel)
+        {
             Notify();
-            finishGameAnimator.SetBool("Open", false);
+            FadeToClear();
+            RestartUI();
+            panel.SetBool("Open", false);
             Time.timeScale = 1;
         }
 
         public void Shop()
         {
             LoaderManager.Instance.LoadScene(shopSceneName);
-            finishGameAnimator.SetBool("Open", false);
             Time.timeScale = 1;
         }
 
         public void MainMenu()
         {
             LoaderManager.Instance.LoadScene(mainMenuSceneName);
-            finishGameAnimator.SetBool("Open", false);
             Time.timeScale = 1;
         }
 
