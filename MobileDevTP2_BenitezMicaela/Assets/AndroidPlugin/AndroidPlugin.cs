@@ -56,6 +56,7 @@ public class AndroidPlugin : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)contentText.transform.parent);
     }
 
+    #region Google_Services
     internal void ProcessAuthentication(SignInStatus status)
     {
         if (status == SignInStatus.Success)
@@ -73,6 +74,7 @@ public class AndroidPlugin : MonoBehaviour
 
         logger.Log(Authenticated.ToString());
     }
+    #endregion
 
     public void MainMenu()
     {

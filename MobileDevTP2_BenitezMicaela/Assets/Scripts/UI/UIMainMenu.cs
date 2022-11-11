@@ -24,7 +24,10 @@ namespace UI
             if (PlayerPrefs.GetInt("Level1") == 0) PlayerPrefs.SetInt("Level1", 1);
 
             /// Achievement
-            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_first_achievement, 100f, success => { });
+            if (Social.localUser.authenticated)
+            {
+                Social.ReportProgress(GPGSIds.achievement_first_achievement, 100f, success => { });
+            }
         }
 
         public void Options()
