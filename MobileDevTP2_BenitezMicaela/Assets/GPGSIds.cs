@@ -24,7 +24,12 @@
 
 public static class GPGSIds
 {
-        public const string achievement_primer_logro = "CgkIg5W27O8PEAIQAQ"; // <GPGSID>
+        public const string achievement_first_achievement = "CgkIg5W27O8PEAIQAQ"; // <GPGSID>
+        public const string achievement_level_4 = "CgkIg5W27O8PEAIQBQ"; // <GPGSID>
+        public const string achievement_level_5 = "CgkIg5W27O8PEAIQBg"; // <GPGSID>
+        public const string achievement_level_1 = "CgkIg5W27O8PEAIQAg"; // <GPGSID>
+        public const string achievement_level_2 = "CgkIg5W27O8PEAIQAw"; // <GPGSID>
+        public const string achievement_level_3 = "CgkIg5W27O8PEAIQBA"; // <GPGSID>
 
 }
 

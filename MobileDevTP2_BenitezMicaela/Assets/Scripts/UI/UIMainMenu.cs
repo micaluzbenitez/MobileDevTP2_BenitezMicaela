@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Managers;
 
+using GooglePlayGames;
+
 namespace UI
 {
     public class UIMainMenu : MonoBehaviour
@@ -20,6 +22,9 @@ namespace UI
         {
             optionsAnimator.SetBool("Idle", true);
             if (PlayerPrefs.GetInt("Level1") == 0) PlayerPrefs.SetInt("Level1", 1);
+
+            /// Achievement
+            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_first_achievement, 100f, success => { });
         }
 
         public void Options()

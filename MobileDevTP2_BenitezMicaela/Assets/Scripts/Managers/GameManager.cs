@@ -5,6 +5,8 @@ using Entities;
 using Toolbox;
 using UI;
 
+using GooglePlayGames;
+
 namespace Managers
 {
     public class GameManager : MonoBehaviourSingleton<GameManager>, IObserver
@@ -133,6 +135,29 @@ namespace Managers
 
         private void Win()
         {
+            /// Achievement
+            switch (level)
+            {
+                case 1:
+                    PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_1, 100f, success => { });
+                    break;
+                case 2:
+                    PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_2, 100f, success => { });
+                    break;
+                case 3:
+                    PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_3, 100f, success => { });
+                    break;
+                case 4:
+                    PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_4, 100f, success => { });
+                    break;
+                case 5:
+                    PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_5, 100f, success => { });
+                    break;
+                default:
+                    break;
+            }
+
+            /// Unlock next level
             if (level < totalLevels && PlayerPrefs.GetInt($"Level{level + 1}") == 0)
             {
                 PlayerPrefs.SetInt($"Level{level + 1}", 1);

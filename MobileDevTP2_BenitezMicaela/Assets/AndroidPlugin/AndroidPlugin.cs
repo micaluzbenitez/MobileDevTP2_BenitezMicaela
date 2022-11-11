@@ -15,6 +15,7 @@ public class AndroidPlugin : MonoBehaviour
     public string mainMenuSceneName = "";
 
     private LoggerBase logger = null;
+    private bool Authenticated = false;
 
     private void Start()
     {
@@ -23,6 +24,7 @@ public class AndroidPlugin : MonoBehaviour
         UpdateLogs();
 
 #if UNITY_ANDROID
+        PlayGamesPlatform.Activate();
         PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
 #endif
     }
@@ -56,20 +58,20 @@ public class AndroidPlugin : MonoBehaviour
 
     internal void ProcessAuthentication(SignInStatus status)
     {
-#if UNITY_ANDROID
-        logger.Log("Loged: " + status.ToString());
-
         if (status == SignInStatus.Success)
         {
             // Continue with Play Games Services
+            Authenticated = true;
         }
         else
         {
             // Disable your integration with Play Games Services or show a login button
             // to ask users to sign-in. Clicking it should call
             // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
+            Authenticated = false;
         }
-#endif
+
+        logger.Log(Authenticated.ToString());
     }
 
     public void MainMenu()
