@@ -4,6 +4,7 @@ using UnityEngine;
 using Managers;
 
 using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 namespace UI
 {
@@ -24,10 +25,7 @@ namespace UI
             if (PlayerPrefs.GetInt("Level1") == 0) PlayerPrefs.SetInt("Level1", 1);
 
             /// Achievement
-            if (Social.localUser.authenticated)
-            {
-                Social.ReportProgress(GPGSIds.achievement_first_achievement, 100f, success => { });
-            }
+            PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_first_achievement, 100.0f, success => { });
         }
 
         public void Options()
