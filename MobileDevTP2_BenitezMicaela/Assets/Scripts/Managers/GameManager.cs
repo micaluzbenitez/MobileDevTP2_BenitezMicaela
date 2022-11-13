@@ -142,18 +142,23 @@ namespace Managers
                 {
                     case 1:
                         PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_1, 100.0f, success => { });
+                        Debug.Log("First level");
                         break;
                     case 2:
                         PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_2, 100.0f, success => { });
+                        Debug.Log("Second level");
                         break;
                     case 3:
                         PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_3, 100.0f, success => { });
+                        Debug.Log("Third level");
                         break;
                     case 4:
                         PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_4, 100.0f, success => { });
+                        Debug.Log("Fourth level");
                         break;
                     case 5:
                         PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_level_5, 100.0f, success => { });
+                        Debug.Log("Fifth level");
                         break;
                     default:
                         break;

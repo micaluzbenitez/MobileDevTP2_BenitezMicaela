@@ -26,6 +26,7 @@ namespace UI
 
             /// Achievement
             PlayGamesPlatform.Instance.ReportProgress(GPGSIds.achievement_first_achievement, 100.0f, success => { });
+            Debug.Log("First achievement");
         }
 
         public void Options()
@@ -36,7 +37,7 @@ namespace UI
 
         public void Logs()
         {
-            LoaderManager.Instance.LoadScene(logsSceneName);
+            AndroidPlugin.Instance.OpenWindow();
         }
 
         public void ResetProgress()

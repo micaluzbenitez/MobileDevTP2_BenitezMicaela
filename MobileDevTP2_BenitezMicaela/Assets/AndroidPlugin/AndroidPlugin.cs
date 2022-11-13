@@ -3,30 +3,36 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Managers;
+using Toolbox;
 
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
-
-public class AndroidPlugin : MonoBehaviour
+public class AndroidPlugin : MonoBehaviourSingleton<AndroidPlugin>
 {
     [SerializeField] private TMP_Text contentText = null;
+    [SerializeField] private GameObject UI = null;
 
     [Header("Scenes")]
     public string mainMenuSceneName = "";
 
     private LoggerBase logger = null;
-    private bool Authenticated = false;
+
+    public override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(this);
+    }
 
     private void Start()
     {
+        CloseWindow();
         logger = LoggerBase.CreateLogger();
         logger.logs = contentText;
         UpdateLogs();
+        Application.logMessageReceived += OnLogReceived;
+    }
 
-#if UNITY_ANDROID
-        PlayGamesPlatform.Activate();
-        PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
-#endif
+    private void OnDestroy()
+    {
+        Application.logMessageReceived -= OnLogReceived;
     }
 
     #region UI_Events
@@ -56,29 +62,23 @@ public class AndroidPlugin : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)contentText.transform.parent);
     }
 
-    #region Google_Services
-    internal void ProcessAuthentication(SignInStatus status)
+    private void OnLogReceived(string condition, string stackTrace, LogType type)
     {
-        if (status == SignInStatus.Success)
-        {
-            // Continue with Play Games Services
-            Authenticated = true;
-        }
-        else
-        {
-            // Disable your integration with Play Games Services or show a login button
-            // to ask users to sign-in. Clicking it should call
-            // PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication).
-            Authenticated = false;
-        }
+        logger.Log(
+            $"<b><color=#{ColorUtility.ToHtmlStringRGB(Color.white)}>[{type.ToString()}]</color></b>: {condition}."
+        );
 
-        logger.Log(Authenticated.ToString());
+        UpdateLogs();
     }
-    #endregion
 
-    public void MainMenu()
+    public void OpenWindow()
     {
-        LoaderManager.Instance.LoadScene(mainMenuSceneName);
+        UI.SetActive(true);
+    }
+
+    public void CloseWindow()
+    {
+        UI.SetActive(false);
     }
 }
 

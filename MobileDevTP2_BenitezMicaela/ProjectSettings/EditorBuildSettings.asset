@@ -26,7 +26,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 966bbc30aa25d634db3af3174e15b05e
-  - enabled: 1
-    path: Assets/AndroidPlugin/AndroidPluginScene.unity
-    guid: da031984f0e5d214c8f79d25ce1688a8
   m_configObjects: {}
