@@ -38,7 +38,7 @@ public class AndroidPlugin : MonoBehaviourSingleton<AndroidPlugin>
     #region UI_Events
     public void SendLog()
     {
-        logger.Log("Time: " + Time.time);
+        Debug.Log("Time: " + Time.time);
         UpdateLogs();
     }
 
