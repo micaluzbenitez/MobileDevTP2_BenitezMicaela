@@ -18,4 +18,5 @@
 -keep class com.google.android.gms.common.api.** { *; }
 -keep class com.google.android.gms.common.data.DataBufferUtils { *; }
 -keep class com.google.android.gms.nearby.** { *; }
--keep class com.example.logger2022.** { *; }
+-keep class com.example.logger2022.GameLogger { *; }
+-keep class com.example.logger2022.AlertCallback { *; }
